@@ -14,20 +14,29 @@
     bmiCal(height, weight);
 
     function bmiCal(hei, wei) {
+      while(isNaN(Number(hei))) {
+        alert("신장은 숫자로 입력해야합니다!!");
+        hei = prompt("신장을 다시 입력하세요.");
+      } 
+      while(isNaN(Number(wei))) {
+        alert("몸무게는 숫자로 입력해야합니다!!");
+        wei = prompt("몸무게를 다시 입력하세요.");
+      }
+      
       let result = ((wei / (hei * hei)) * 10000).toFixed(2);
       console.log(result);
       if(18.5 > result) {
-        document.write("BMI 지수는 " + result + "이며, <b>저체중</b>에 해당합니다.");
+        document.write(name + "씨의 BMI 지수는 " + result + "이며, <b>저체중</b>에 해당합니다.");
       } else if(result < 22.9) {
-        document.write("BMI 지수는 " + result + "이며, <b>정상범위</b>에 해당합니다.");
+        document.write(name + "씨의 BMI 지수는 " + result + "이며, <b>정상범위</b>에 해당합니다.");
       } else if(result <= 24.9) {
-        document.write("BMI 지수는 " + result + "이며, <b>비만 전 단계</b>에 해당합니다.");
+        document.write(name + "씨의 BMI 지수는 " + result + "이며, <b>비만 전 단계</b>에 해당합니다.");
       } else if(result <= 29.9) {
-        document.write("BMI 지수는 " + result + "이며, <b>1단계 비만</b>에 해당합니다.");
+        document.write(name + "씨의 BMI 지수는 " + result + "이며, <b>1단계 비만</b>에 해당합니다.");
       } else if(result <= 34.9) {
-        document.write("BMI 지수는 " + result + "이며, <b>2단계 비만</b>에 해당합니다.");
+        document.write(name + "씨의 BMI 지수는 " + result + "이며, <b>2단계 비만</b>에 해당합니다.");
       } else if(35 <= result ) {
-        document.write("BMI 지수는 " + result + "이며, <b>3단계 비만</b>에 해당합니다.");
+        document.write(name + "씨의 BMI 지수는 " + result + "이며, <b>3단계 비만</b>에 해당합니다.");
       }
     }
   </script>
