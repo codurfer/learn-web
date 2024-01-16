@@ -4,40 +4,96 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>가위바위보</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .select {
+        background-color: coral;
+        color: aliceblue;
+        border-radius: 15%;
+        margin: 5px;
+        padding: 15px;
+      }
+    </style>
   </head>
   <body>
+    <h1>컴퓨터와 가위바위보 대결!!</h1>
+    <label style="margin-bottom: 15px"
+      >가위 바위 보 중 하나를 선택해주세요!</label
+    >
+    <div>
+      <button
+        type="button"
+        class="select"
+        value="0"
+        onclick="fight(this.value)"
+      >
+        가위
+      </button>
+      <button
+        type="button"
+        class="select"
+        value="1"
+        onclick="fight(this.value)"
+      >
+        바위
+      </button>
+      <button
+        type="button"
+        style="padding: 15px 20px"
+        class="select"
+        value="2"
+        onclick="fight(this.value)"
+      >
+        보
+      </button>
+    </div>
     <script>
       // 가위 0, 바위 1, 보 2
-      var com = Math.floor(Math.random() * 3);
-      var user = Math.floor(Math.random() * 3);
-      var arry = { 0: '가위', 1: '바위', 2: '보' };
-
-      document.write(arry[2]);
-      if (com == 0 && user == 2) {
-        document.write(' 컴퓨터의 승!<br>');
-        document.write(
-          '결과 = 컴퓨터 : ' + arry[com] + ' 유저 : ' + arry[user]
-        );
-      } else if (user == 0 && com == 2) {
-        document.write(' 유저의 승!<br>');
-        document.write(
-          '결과 = 컴퓨터 : ' + arry[com] + ' 유저 : ' + arry[user]
-        );
-      } else if (com < user) {
-        document.write(' 유저의 승!<br>');
-        document.write(
-          '결과 = 컴퓨터 : ' + arry[com] + ' 유저 : ' + arry[user]
-        );
-      } else if (user < com) {
-        document.write(' 컴퓨터의 승!<br>');
-        document.write(
-          '결과 = 컴퓨터 : ' + arry[com] + ' 유저 : ' + arry[user]
-        );
-      } else {
-        document.write('무승부!<br>');
-        document.write(
-          '결과 = 컴퓨터 : ' + arry[com] + ' 유저 : ' + arry[user]
-        );
+      function fight(value) {
+        var com = Math.floor(Math.random() * 3);
+        var user = Number(value);
+        var arry = { 0: '가위', 1: '바위', 2: '보' };
+        if (com == 0 && user == 2) {
+          alert(
+            '이런!.. 컴퓨터가 이겼네요...\n\n결과\n컴퓨터 : ' +
+              arry[com] +
+              ' / 유저 : ' +
+              arry[user]
+          );
+        } else if (user == 0 && com == 2) {
+          alert(
+            '축하합니다!! 컴퓨터를 이기셨습니다!\n\n결과\n컴퓨터 : ' +
+              arry[com] +
+              ' / 유저 : ' +
+              arry[user]
+          );
+        } else if (com < user) {
+          alert(
+            '축하합니다!! 컴퓨터를 이기셨습니다!\n\n결과\n컴퓨터 : ' +
+              arry[com] +
+              ' / 유저 : ' +
+              arry[user]
+          );
+        } else if (user < com) {
+          alert(
+            '이런!.. 컴퓨터가 이겼네요...\n\n결과\n컴퓨터 : ' +
+              arry[com] +
+              ' / 유저 : ' +
+              arry[user]
+          );
+        } else {
+          alert(
+            '컴퓨터와 동심일체?? 무승부!\n\n결과\n컴퓨터 : ' +
+              arry[com] +
+              ' / 유저 : ' +
+              arry[user]
+          );
+        }
       }
     </script>
   </body>
