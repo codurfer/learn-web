@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로또 추첨</title>
+  </head>
+  <body>
+    <h1>로또 추첨을 시작합니다!</h1>
+    <p class="show"></p>
+    <button type="button" onclick="start()">추첨하기</button>
+    <script>
+      function start() {
+        var lotto = new Set();
+        for (let i = 0; lotto.size != 6; i++) {
+          var num = parseInt(Math.random() * 45 + 1);
+          lotto.add(num);
+        }
+        var show = Array.from(lotto);
+        console.log(show.sort((a, b) => a - b));
+        document.write('<br>로또 당첨 번호는 <b>' + [...show] + '</b> 입니다.');
+        document.write('<br><br><a href="/js-4.html">뒤로가기</a>');
+      }
+    </script>
+  </body>
+</html>
