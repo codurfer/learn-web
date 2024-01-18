@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>카운터</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .ma {
+        margin-top: 10px;
+      }
+      .countNum {
+        display: flex;
+        justify-content: center;
+      }
+      .box {
+        background-color: rgb(91, 86, 86);
+        color: aliceblue;
+        margin: 10px;
+        padding: 10px 40px;
+        text-align: center;
+      }
+      .countNum h4:not(.expired) {
+        font-size: 2rem;
+        margin-bottom: 0.25rem;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="ma">
+      <h2 class="goal">목표시간은 2024년 1월 20일 23시 59분 입니다.</h2>
+      <div class="countNum">
+        <div class="box">
+          <h3 class="days">40</h3>
+          <span>일</span>
+        </div>
+        <div class="box">
+          <h3 class="hour">18</h3>
+          <span>시</span>
+        </div>
+        <div class="box">
+          <h3 class="min">50</h3>
+          <span>분</span>
+        </div>
+        <div class="box">
+          <h3 class="second">30</h3>
+          <span>초</span>
+        </div>
+      </div>
+    </section>
+    <script>
+      let now = new Date();
+      let year = now.getFullYear();
+      let month = now.getMonth();
+      let day = now.getDate();
+
+      let setDate = new Date(year, month, day + 10, 23, 59, 59);
+
+      const goal = document.querySelector('.goal');
+      const countdown = document.querySelector('.countNum');
+      const items = document.querySelectorAll('.box h3');
+
+      let goalYear = setDate.getFullYear();
+      let goalMonth = setDate.getMonth() + 1;
+      let goalDay = setDate.getDate();
+      let goalHour = setDate.getHours();
+      let goalMin = setDate.getMinutes();
+
+      goal.textContent = `목표시간은 "${goalYear}년 ${goalMonth}월 ${goalDay}일 ${goalHour}시 ${goalMin}분" 입니다`;
+
+      const setTime = setDate.getTime();
+
+      function getCountTime() {
+        const today = new Date().getTime();
+        const t = setTime - today;
+
+        const oneDay = 24 * 60 * 60 * 1000;
+        const oneHour = 60 * 60 * 1000;
+        const oneMin = 60 * 1000;
+        let days = Math.floor(t / oneDay);
+        let hours = Math.floor((t % oneDay) / oneHour);
+        let minutes = Math.floor((t % oneHour) / oneMin);
+        let seconds = Math.floor((t % oneMin) / 1000);
+
+        const values = [days, hours, minutes, seconds];
+        function format(item) {
+          if (item < 10) {
+            return (item = `0${item}`);
+          }
+          return item;
+        }
+
+        items.forEach(function (item, index) {
+          item.innerHTML = format(values[index]);
+        });
+
+        if (t < 0) {
+          clearInterval(times);
+          countdown.innerHTML = `<h4 class="expired">디데이가 지났습니다.</h4>`;
+        }
+      }
+      let times = setInterval(getCountTime, 1000);
+      getCountTime();
+    </script>
+  </body>
+</html>
