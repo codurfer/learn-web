@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>스톱워치</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100dvh;
+      }
+      span {
+        font-size: 100px;
+      }
+      .viewContainer {
+        padding: 60px 100px;
+        background-color: coral;
+      }
+      .btnContainer {
+        display: flexbox;
+        justify-content: center;
+        margin: 20px;
+      }
+      button {
+        padding: 20px;
+        border: none;
+        color: white;
+        font-weight: bold;
+        background-color: blue;
+      }
+      .mil {
+        font-size: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="viewContainer">
+      <span class="view">0:00:00</span>
+      <span class="mil">/00</span>
+    </div>
+    <div class="btnContainer">
+      <button class="btn start">시작</button>
+      <button class="btn pause">일시정지</button>
+      <button class="btn reset">초기화</button>
+    </div>
+    <script>
+      const view = document.querySelector('.view');
+      const milView = document.querySelector('.mil');
+      const btns = document.querySelectorAll('.btn');
+      let interval;
+      let hou = 0;
+      let min = 0;
+      let sec = 0;
+      let mil = 0;
+
+      function format(item) {
+        if (item < 10) {
+          return (item = `0${item}`);
+        }
+        return item;
+      }
+
+      btns.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          const style = e.currentTarget.classList;
+
+          if (style.contains('reset')) {
+            clearInterval(interval);
+            hou = 0;
+            min = 0;
+            sec = 0;
+            mil = 0;
+            view.innerText = `${hou}:${format(min)}:${format(sec)}`;
+            milView.innerText = `/${format(mil)}`;
+          } else if (style.contains('start')) {
+            interval = setInterval(getTime, 1 / 1000);
+          } else {
+            clearInterval(interval);
+            console.log(item);
+          }
+        });
+      });
+
+      function getTime() {
+        mil++;
+        if (mil == 100) {
+          mil = 0;
+          sec++;
+        } else mil;
+
+        view.innerText = `${hou}:${format(min)}:${format(sec)}`;
+        milView.innerText = `/${format(mil)}`;
+      }
+    </script>
+  </body>
+</html>
