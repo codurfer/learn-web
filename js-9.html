@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>업다운게임</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100dvh;
+      }
+      div {
+        display: flex;
+        flex-direction: column;
+      }
+      #show {
+        margin: 15px;
+        font-weight: bold;
+      }
+      #start {
+        padding: 20px;
+        display: block;
+      }
+      .info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 450px;
+        height: 100px;
+        font-size: 30px;
+        margin: 20px;
+        padding: 100px;
+        background-color: rgb(161, 200, 99);
+      }
+      label {
+        padding: 10px;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>업다운을 시작볼까요?</h1>
+    <div class="info">
+      <span id="show">버튼을 눌러주세요</span>
+      <button class="btn gameStart" id="start" display="block">게임시작</button>
+    </div>
+
+    <label class="limit"></label>
+    <section>
+      <input id="anwser" type="number" />
+      <button class="btn check">확인</button>
+    </section>
+    <script>
+      const info = document.querySelector('.info');
+      const view = document.querySelector('.view');
+      const limit = document.querySelector('.limit');
+      const btns = document.querySelectorAll('.btn');
+      var cerrect;
+      var count = 10;
+      btns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const name = e.currentTarget.classList;
+          if (name.contains('gameStart')) {
+            let guess = Math.floor(Math.random() * 50 + 1);
+            cerrect = guess;
+            console.log(guess);
+            document.getElementById('start').style.display = 'none';
+            info.innerHTML = '<span id="show">숫자를 추측하세요.</span>';
+            limit.innerHTML = '<label>범위는 1 ~ 50입니다.</label>';
+          } else if (name.contains('check')) {
+            let value = document.getElementById('anwser').value;
+            check(value);
+          }
+        });
+      });
+
+      function check(value) {
+        count--;
+        console.log(`cerrect:${cerrect} number:${value}`);
+        if (count == 0) {
+          info.innerHTML = '게임 오버!';
+        } else {
+          if (cerrect == value) {
+            info.innerHTML = `<span id="show">${cerrect}! 정답입니다.</span>`;
+          } else if (cerrect > value) {
+            info.innerHTML = `<span id="show">업! 숫자를 높이세요!!</span><label>남은 기회는 ${count}번!</label>`;
+          } else
+            info.innerHTML = `<span id="show">다운! 숫자를 낮추세요!!</span><label>남은 기회는 ${count}번!</label>`;
+        }
+      }
+    </script>
+  </body>
+</html>
