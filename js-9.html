@@ -16,16 +16,24 @@
         display: flex;
         flex-direction: column;
       }
-      #show {
+      span {
+        text-align: center;
+      }
+      .show {
         margin: 15px;
         font-weight: bold;
       }
-      #start {
-        padding: 20px;
-        display: block;
+      .up {
+        font-size: 60px;
+        font-weight: bold;
+        color: rgb(230, 83, 38);
+      }
+      .down {
+        font-size: 60px;
+        font-weight: bold;
+        color: rgb(38, 108, 230);
       }
       .info {
-        display: flex;
         align-items: center;
         justify-content: center;
         width: 450px;
@@ -33,7 +41,19 @@
         font-size: 30px;
         margin: 20px;
         padding: 100px;
-        background-color: rgb(161, 200, 99);
+        background-color: rgb(77, 235, 135);
+      }
+      .start {
+        margin: 10px;
+        padding: 25px;
+        border: none;
+        border-radius: 100%;
+        font-weight: bold;
+        color: white;
+        background-color: rgb(58, 82, 88);
+      }
+      .contInfo {
+        font-size: 20px;
       }
       label {
         padding: 10px;
@@ -42,34 +62,39 @@
     </style>
   </head>
   <body>
-    <h1>업다운을 시작볼까요?</h1>
+    <h1>Up & Down Game</h1>
     <div class="info">
-      <span id="show">버튼을 눌러주세요</span>
-      <button class="btn gameStart" id="start" display="block">게임시작</button>
+      <span class="show">버튼을 눌러주세요</span>
+      <span class="countInfo" id="countInfo" style="display: none"></span>
+      <button class="btn start" id="start" style="display: block">시작</button>
     </div>
-
-    <label class="limit"></label>
-    <section>
-      <input id="anwser" type="number" />
-      <button class="btn check">확인</button>
+    <label class="limit" id="limit" style="display: none"></label>
+    <section class="container">
+      <input id="anwser" type="number" style="display: none" />
+      <button id="check" class="btn check" style="display: none">확인</button>
     </section>
     <script>
-      const info = document.querySelector('.info');
-      const view = document.querySelector('.view');
+      const show = document.querySelector('.show');
+      const countInfo = document.querySelector('.countInfo');
       const limit = document.querySelector('.limit');
+      const anwser = document.querySelector('#anwser');
       const btns = document.querySelectorAll('.btn');
-      var cerrect;
-      var count = 10;
+
+      var cerrect = 0;
+      var count = 0;
+
       btns.forEach((btn) => {
         btn.addEventListener('click', (e) => {
           const name = e.currentTarget.classList;
-          if (name.contains('gameStart')) {
+          if (name.contains('start')) {
+            count = 10;
             let guess = Math.floor(Math.random() * 50 + 1);
             cerrect = guess;
-            console.log(guess);
-            document.getElementById('start').style.display = 'none';
-            info.innerHTML = '<span id="show">숫자를 추측하세요.</span>';
-            limit.innerHTML = '<label>범위는 1 ~ 50입니다.</label>';
+            game(1);
+            show.innerText = '숫자를 추측하세요.';
+            countInfo.innerText = '';
+            limit.innerText = '범위는 1 ~ 50입니다.';
+            document.getElementById('anwser').value = null;
           } else if (name.contains('check')) {
             let value = document.getElementById('anwser').value;
             check(value);
@@ -77,18 +102,47 @@
         });
       });
 
+      anwser.addEventListener('keydown', (e) => {
+        let value = document.getElementById('anwser').value;
+        if (e.keyCode === 13) {
+          if (value != '') {
+            check(value);
+          }
+        }
+      });
+
+      function game(set) {
+        if (set == 1) {
+          document.getElementById('start').style.display = 'none';
+          document.getElementById('limit').style.display = 'block';
+          document.getElementById('countInfo').style.display = 'block';
+          document.getElementById('anwser').style.display = 'inline-block';
+          document.getElementById('check').style.display = 'inline-block';
+        } else {
+          document.getElementById('start').style.display = 'block';
+          document.getElementById('limit').style.display = 'none';
+          document.getElementById('countInfo').style.display = 'none';
+          document.getElementById('anwser').style.display = 'none';
+          document.getElementById('check').style.display = 'none';
+        }
+      }
+
       function check(value) {
         count--;
-        console.log(`cerrect:${cerrect} number:${value}`);
         if (count == 0) {
-          info.innerHTML = '게임 오버!';
+          show.innerText = '게임 오버!\n10번의 기회를 다 썼어요';
+          game(0);
         } else {
           if (cerrect == value) {
-            info.innerHTML = `<span id="show">${cerrect}! 정답입니다.</span>`;
+            show.innerText = `정답입니다!!\n - 답:${cerrect}번 -`;
+            game(0);
           } else if (cerrect > value) {
-            info.innerHTML = `<span id="show">업! 숫자를 높이세요!!</span><label>남은 기회는 ${count}번!</label>`;
-          } else
-            info.innerHTML = `<span id="show">다운! 숫자를 낮추세요!!</span><label>남은 기회는 ${count}번!</label>`;
+            show.innerHTML = '<span class="up">UP</span>';
+            countInfo.innerText = `남은 기회는 ${count}번!`;
+          } else {
+            show.innerHTML = '<span class="down">DOWN</span>';
+            countInfo.innerText = `남은 기회는 ${count}번!`;
+          }
         }
       }
     </script>
