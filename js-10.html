@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>비디오 페이지</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100dvh;
+      }
+      .video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 102vh;
+        object-fit: cover;
+        z-index: -2;
+      }
+      .title {
+        color: aliceblue;
+        font-size: 100px;
+      }
+      header::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 102vh;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: -1;
+      }
+      body::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <video class="video" preload="auto" autoplay="true" loop muted="muted">
+        <source src="video.mp4" type="video/mp4" />
+      </video>
+      <h1 class="title">환영합니다!</h1>
+    </header>
+  </body>
+</html>
