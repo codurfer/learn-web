@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>토글</title>
+  </head>
+  <body>
+    <h1>버튼을 눌러보세요</h1>
+    <button id="block" class="btn block" style="display: block">
+      내용 표시
+    </button>
+    <button id="none" class="btn none" style="display: none">
+      내용 숨기기
+    </button>
+    <span id="toggle" style="display: none">숨겨진 내용입니다.</span>
+    <script>
+      const btns = document.querySelectorAll('.btn');
+
+      btns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const name = e.currentTarget.classList;
+          const display = e.currentTarget.style;
+          if (name.contains('block')) {
+            document.getElementById('toggle').style.display = 'block';
+            document.getElementById('none').style.display = 'block';
+            document.getElementById('block').style.display = 'none';
+          } else {
+            document.getElementById('toggle').style.display = 'none';
+            document.getElementById('none').style.display = 'none';
+            document.getElementById('block').style.display = 'block';
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
