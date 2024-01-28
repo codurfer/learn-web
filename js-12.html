@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tab content</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100dvh;
+      }
+      button {
+        width: 250px;
+        height: 60px;
+        border: none;
+        color: white;
+        font-weight: bold;
+        background: #666060;
+      }
+      button:hover {
+        background: #aea9a9;
+      }
+      .content-container {
+        width: 100%;
+      }
+      .content {
+        display: none;
+      }
+      .btn-tab.active {
+        background: #aea9a9;
+      }
+      .content.active {
+        display: block;
+        background: #aea9a9;
+        padding: 10px 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>탭 내용</h1>
+    <div class="tab">
+      <article class="btn-container">
+        <button class="btn-tab active" data-id="1">내용 1</button>
+        <button class="btn-tab" data-id="2">내용 2</button>
+        <button class="btn-tab" data-id="3">내용 3</button>
+      </article>
+      <article class="content-container">
+        <div class="content" id="1">
+          <p>안녕하세요, 이곳은 내용1의 탭입니다.</p>
+        </div>
+        <div class="content active" id="2">
+          <p>반갑습니다, 이곳은 내용2의 탭입니다.</p>
+        </div>
+        <div class="content" id="3">
+          <p>환영합니다, 이곳은 내용3의 탭입니다.</p>
+        </div>
+      </article>
+    </div>
+    <script>
+      const btns = document.querySelectorAll('.btn-tab');
+      const contents = document.querySelectorAll('.content');
+      const tab = document.querySelector('.tab');
+
+      tab.addEventListener('click', (e) => {
+        const id = e.target.dataset.id;
+        if (id) {
+          btns.forEach((btn) => {
+            btn.classList.remove('active');
+            e.target.classList.add('active');
+          });
+          contents.forEach((content) => {
+            content.classList.remove('active');
+          });
+          const element = document.getElementById(id);
+          element.classList.add('active');
+        }
+      });
+    </script>
+  </body>
+</html>
