@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Q&A</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100dvh;
+      }
+      .question {
+        width: 400px;
+        margin: 20px;
+        padding: 10px 25px;
+        background-color: rgb(206, 237, 156);
+      }
+      .question-title {
+        display: inline-block;
+      }
+      .question-btn {
+        margin: 15px 0px;
+        float: right;
+      }
+      .active .open {
+        display: none;
+      }
+      .close {
+        display: none;
+      }
+      .active .close {
+        display: block;
+      }
+      .question-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>자주하는 질문들</h1>
+    <article class="question">
+      <div class="question-title">
+        <p>환불 대한 처리 시간 1</p>
+      </div>
+      <button class="question-btn">
+        <span class="btn open">내용보기</span>
+        <span class="btn close">내용접기</span>
+      </button>
+      <div class="question-content" id="1">
+        <p>
+          체크카드 및 신용카드는 환불처리 완료 후 영업일 기준 4~5일 소요될 수
+          있으며, 자세한 내용은 사용하시는 카드사를 이용해서 알아볼 수 있습니다.
+        </p>
+      </div>
+    </article>
+    <article class="question">
+      <div class="question-title">
+        <p>환불 대한 처리 시간 2</p>
+      </div>
+      <button class="question-btn">
+        <span class="btn open active">내용보기</span>
+        <span class="btn close">내용접기</span>
+      </button>
+      <div class="question-content">
+        <p>
+          체크카드 및 신용카드는 환불처리 완료 후 영업일 기준 4~5일 소요될 수
+          있으며, 자세한 내용은 사용하시는 카드사를 이용해서 알아볼 수 있습니다.
+        </p>
+      </div>
+    </article>
+  </body>
+  <script>
+    const btns = document.querySelectorAll('.btn');
+
+    btns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const show = e.currentTarget.parentElement.parentElement;
+        show.classList.toggle('active');
+      });
+    });
+  </script>
+</html>
