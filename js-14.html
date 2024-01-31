@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>사이드 메뉴</title>
+    <style>
+      a {
+        text-decoration: none;
+        font-size: 30px;
+        color: rgb(77, 76, 76);
+      }
+      .menu {
+        padding: 20px;
+        list-style-type: none;
+      }
+      ul {
+        margin: -15px 0px;
+      }
+      li {
+        margin: 5px -20px;
+        padding: 10px;
+        transition: all 0.3s;
+      }
+      li:hover {
+        padding: 20px;
+        background-color: rgb(175, 236, 236);
+      }
+      .sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 70%;
+        height: 100%;
+        background: rgb(235, 229, 210);
+        transition: all 0.7s;
+        transform: translate(100%);
+      }
+      .showup {
+        transform: translate(0);
+      }
+      .sidebar-title {
+        margin: 10px;
+        font-size: 40px;
+        font-weight: bold;
+      }
+      .sidebar-btn {
+        float: right;
+        font-size: 30px;
+        padding: 10px;
+        background-color: transparent;
+        border: 0px;
+      }
+      .sidebar-btn:hover {
+        color: coral;
+      }
+      .close-btn {
+        float: right;
+        margin: 10px 0px;
+        font-size: 20px;
+        background-color: transparent;
+        border: 0px;
+      }
+      .close-btn:hover {
+        color: coral;
+      }
+      @media screen and (min-width: 676px) {
+        .sidebar {
+          width: 400px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="sidebar-btn">Menu</button>
+    <aside class="sidebar">
+      <div class="sidebar-title">
+        <span>사이드바</span>
+        <button class="close-btn">닫기</button>
+      </div>
+      <ul class="menu">
+        <li><a href="#">HOME</a></li>
+        <li><a href="#">ABOUT</a></li>
+        <li><a href="#">BLOG</a></li>
+        <li><a href="#">CONTACT</a></li>
+      </ul>
+    </aside>
+    <script>
+      const sidebarBtn = document.querySelector('.sidebar-btn');
+      const closeBtn = document.querySelector('.close-btn');
+      const sideber = document.querySelector('.sidebar');
+
+      sidebarBtn.addEventListener('click', () => {
+        // if (sideber.classList.contains('showup')) {
+        //   sideber.classList.remove('showup');
+        // } else {
+        //   sideber.classList.add('showup');
+        // }
+
+        sideber.classList.toggle('showup');
+      });
+
+      closeBtn.addEventListener('click', () => {
+        sideber.classList.remove('showup');
+      });
+    </script>
+  </body>
+</html>
