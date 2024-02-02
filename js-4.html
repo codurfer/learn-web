@@ -12,29 +12,100 @@
         align-items: center;
         min-height: 100dvh;
       }
-      .show {
-        margin-bottom: 20px;
+      h1 {
+        margin: 0px;
+      }
+      .info {
+        margin-top: -10px;
+        margin-bottom: 15px;
+      }
+      .circle {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        line-height: 55px;
+        margin: 30px;
+      }
+      .num {
+        width: 60px;
+        height: 60px;
+        margin: 2px;
+        border-radius: 50%;
+        font-size: 30px;
+        font-weight: bold;
+        background-color: yellowgreen;
+      }
+      .start {
+        width: 90px;
+        height: 50px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10%;
+        color: white;
+        background-color: cornflowerblue;
+      }
+      .reset {
+        width: 90px;
+        height: 50px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10%;
+        color: white;
+        background-color: tan;
       }
     </style>
   </head>
   <body>
     <h1>로또 추첨을 시작합니다!</h1>
-    <div class="show"></div>
-    <button class="startBtn active">추첨하기</button>
+    <div class="circle">
+      <div class="num arr-1">?</div>
+      <div class="num arr-2">?</div>
+      <div class="num arr-3">?</div>
+      <div class="num arr-4">?</div>
+      <div class="num arr-5">?</div>
+      <div class="num arr-6">?</div>
+    </div>
+    <div class="info"></div>
+    <div class="btns">
+      <button class="btn start">추첨하기</button>
+      <button class="btn reset" onclick="location.reload()">초기화</button>
+    </div>
     <script>
-      const show = document.querySelector('.show');
-      const btn = document.querySelector('.startBtn');
+      const info = document.querySelector('.info');
+      const circle = document.querySelector('.circle');
+      const start = document.querySelector('.start');
+      const nums = document.querySelectorAll('.circle .num');
+      let count = 0;
 
-      btn.addEventListener('click', (e) => {
-        let lottoSet = new Set();
-        for (let i = 0; lottoSet.size != 6; i++) {
-          let number = parseInt(Math.random() * 45 + 1);
-          lottoSet.add(number);
+      start.addEventListener('click', (e) => {
+        const className = e.currentTarget.classList;
+        if (className.contains('start')) {
+          count++;
+          console.log(count);
+          let lottoSet = new Set();
+          for (let i = 0; lottoSet.size != 6; i++) {
+            let number = parseInt(Math.random() * 45 + 1);
+            lottoSet.add(number);
+          }
+          const showup = Array.from(lottoSet);
+          showup.sort((a, b) => a - b);
+          info.innerText = `${count}번째, 추첨번호는 위와 같습니다.`;
+
+          nums.forEach((item, index) => {
+            if (showup[index] <= 10) {
+              item.style.backgroundColor = 'rgb(250, 196, 0)';
+            } else if (showup[index] <= 20) {
+              item.style.backgroundColor = 'rgb(104, 200, 242)';
+            } else if (showup[index] <= 30) {
+              item.style.backgroundColor = 'rgb(255, 114, 113)';
+            } else if (showup[index] <= 40) {
+              item.style.backgroundColor = 'rgb(170, 170, 170)';
+            } else if (showup[index] <= 45) {
+              item.style.backgroundColor = 'rgb(176, 216, 65)';
+            }
+            item.innerHTML = showup[index];
+          });
         }
-        let showup = Array.from(lottoSet);
-        showup.sort((a, b) => a - b);
-
-        show.innerText = `추첨 번호는 ${[...showup]} 입니다.`;
       });
     </script>
   </body>
