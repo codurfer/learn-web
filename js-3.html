@@ -11,90 +11,105 @@
         justify-content: center;
         align-items: center;
       }
-      .select {
+      .start {
+        border-radius: 50%;
+        border: none;
+        color: white;
+        font-weight: bold;
+        background-color: cornflowerblue;
+        width: 50px;
+        height: 50px;
+      }
+      .btn {
+        display: none;
+      }
+      .view {
+        display: none;
+      }
+      .game .btn {
+        display: inline-block;
         background-color: coral;
         color: aliceblue;
+        border: none;
+        font-weight: bold;
         border-radius: 15%;
         margin: 5px;
         padding: 15px;
+      }
+      .game {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .game .start {
+        display: none;
+      }
+      .open {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-weight: bold;
+        background-color: beige;
+        width: 400px;
+        height: 300px;
+        margin-bottom: 15px;
+      }
+      .paper {
+        padding: 15px 20px;
       }
     </style>
   </head>
   <body>
     <h1>컴퓨터와 가위바위보 대결!!</h1>
-    <label style="margin-bottom: 15px"
-      >가위 바위 보 중 하나를 선택해주세요!</label
-    >
+    <span class="view"></span>
     <div>
-      <button
-        type="button"
-        class="select"
-        value="0"
-        onclick="fight(this.value)"
-      >
-        가위
-      </button>
-      <button
-        type="button"
-        class="select"
-        value="1"
-        onclick="fight(this.value)"
-      >
-        바위
-      </button>
-      <button
-        type="button"
-        style="padding: 15px 20px"
-        class="select"
-        value="2"
-        onclick="fight(this.value)"
-      >
-        보
-      </button>
+      <button class="start">시작</button>
+      <div>
+        <button class="btn scissors" data-id="0">가위</button>
+        <button class="btn rock" data-id="1">바위</button>
+        <button class="btn paper" data-id="2">보</button>
+      </div>
     </div>
     <script>
       // 가위 0, 바위 1, 보 2
-      function fight(value) {
-        var com = Math.floor(Math.random() * 3);
-        var user = Number(value);
-        var arry = { 0: '가위', 1: '바위', 2: '보' };
-        if (com == 0 && user == 2) {
-          alert(
-            '이런!.. 컴퓨터가 이겼네요...\n\n결과\n컴퓨터 : ' +
-              arry[com] +
-              ' / 유저 : ' +
-              arry[user]
-          );
-        } else if (user == 0 && com == 2) {
-          alert(
-            '축하합니다!! 컴퓨터를 이기셨습니다!\n\n결과\n컴퓨터 : ' +
-              arry[com] +
-              ' / 유저 : ' +
-              arry[user]
-          );
-        } else if (com < user) {
-          alert(
-            '축하합니다!! 컴퓨터를 이기셨습니다!\n\n결과\n컴퓨터 : ' +
-              arry[com] +
-              ' / 유저 : ' +
-              arry[user]
-          );
-        } else if (user < com) {
-          alert(
-            '이런!.. 컴퓨터가 이겼네요...\n\n결과\n컴퓨터 : ' +
-              arry[com] +
-              ' / 유저 : ' +
-              arry[user]
-          );
-        } else {
-          alert(
-            '컴퓨터와 동심일체?? 무승부!\n\n결과\n컴퓨터 : ' +
-              arry[com] +
-              ' / 유저 : ' +
-              arry[user]
-          );
-        }
-      }
+      const start = document.querySelector('.start');
+      const view = document.querySelector('.view');
+      const btns = document.querySelectorAll('.btn');
+
+      start.addEventListener('click', (e) => {
+        e.target.classList.add('none');
+        const gameStart = e.currentTarget.parentElement;
+        gameStart.classList.add('game');
+        let com = Math.floor(Math.random() * 3);
+        view.classList.add('open');
+        view.innerText = '가위 바위 보 중 하나를 선택하세요.';
+        btns.forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            const id = e.target.dataset.id;
+            const btnName = e.currentTarget.classList;
+            console.log(id);
+            let arry = { 0: '가위', 1: '바위', 2: '보' };
+            if (com == 0 && id == 2) {
+              view.innerText = `이런!.. 컴퓨터가 이겼네요....\n컴퓨터[${arry[com]}] vs 유저[${arry[com]}]`;
+              gameStart.classList.remove('game');
+            } else if (id == 0 && com == 2) {
+              view.innerText = `축하합니다!! 컴퓨터를 이기셨습니다!\n컴퓨터[${arry[com]}] vs 유저[${arry[com]}]`;
+              gameStart.classList.remove('game');
+            } else if (com < id) {
+              view.innerText = `축하합니다!! 컴퓨터를 이기셨습니다!\n컴퓨터[${arry[com]}] vs 유저[${arry[com]}]`;
+              gameStart.classList.remove('game');
+            } else if (id < com) {
+              view.innerText = `이런!.. 컴퓨터가 이겼네요...\n컴퓨터[${arry[com]}] vs 유저[${arry[com]}]`;
+              gameStart.classList.remove('game');
+            } else {
+              view.innerText = `컴퓨터와 동심일체?? 무승부!\n컴퓨터[${arry[com]}] vs 유저[${arry[com]}]`;
+              gameStart.classList.remove('game');
+            }
+          });
+        });
+      });
     </script>
   </body>
 </html>
