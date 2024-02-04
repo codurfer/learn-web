@@ -92,19 +92,19 @@
             console.log(id);
             let arry = { 0: '가위', 1: '바위', 2: '보' };
             if (com == 0 && id == 2) {
-              view.innerText = `이런!.. 컴퓨터가 이겼네요....\n컴퓨터[${arry[com]}] vs 유저[${arry[com]}]`;
+              view.innerText = `이런!.. 컴퓨터가 이겼네요....\n컴퓨터[${arry[com]}] vs 유저[${arry[id]}]`;
               gameStart.classList.remove('game');
             } else if (id == 0 && com == 2) {
-              view.innerText = `축하합니다!! 컴퓨터를 이기셨습니다!\n컴퓨터[${arry[com]}] vs 유저[${arry[com]}]`;
+              view.innerText = `축하합니다!! 컴퓨터를 이기셨습니다!\n컴퓨터[${arry[com]}] vs 유저[${arry[id]}]`;
               gameStart.classList.remove('game');
             } else if (com < id) {
-              view.innerText = `축하합니다!! 컴퓨터를 이기셨습니다!\n컴퓨터[${arry[com]}] vs 유저[${arry[com]}]`;
+              view.innerText = `축하합니다!! 컴퓨터를 이기셨습니다!\n컴퓨터[${arry[com]}] vs 유저[${arry[id]}]`;
               gameStart.classList.remove('game');
             } else if (id < com) {
-              view.innerText = `이런!.. 컴퓨터가 이겼네요...\n컴퓨터[${arry[com]}] vs 유저[${arry[com]}]`;
+              view.innerText = `이런!.. 컴퓨터가 이겼네요...\n컴퓨터[${arry[com]}] vs 유저[${arry[id]}]`;
               gameStart.classList.remove('game');
             } else {
-              view.innerText = `컴퓨터와 동심일체?? 무승부!\n컴퓨터[${arry[com]}] vs 유저[${arry[com]}]`;
+              view.innerText = `컴퓨터와 동심일체?? 무승부!\n컴퓨터[${arry[com]}] vs 유저[${arry[id]}]`;
               gameStart.classList.remove('game');
             }
           });
