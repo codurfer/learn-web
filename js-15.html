@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100dvh;
+      }
+      div {
+        margin: 5px;
+      }
+      select {
+        height: 35px;
+      }
+      input {
+        height: 30px;
+        text-align: right;
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      .price {
+        width: 90px;
+      }
+      .btn {
+        width: 100%;
+        float: left;
+      }
+      .view-container {
+        display: block;
+        margin: 10px;
+        width: 380px;
+      }
+      .btn {
+        float: right;
+        width: 70px;
+        height: 40px;
+        border: none;
+        background-color: rgb(24, 216, 97);
+        font-size: 20px;
+      }
+      .btn:hover {
+        background-color: rgb(114, 212, 152);
+      }
+      .view {
+        float: left;
+        margin: 10px;
+      }
+    </style>
+    <title>환전소</title>
+  </head>
+  <body>
+    <h1>미일중 환전소</h1>
+    <p>원화를 다른 나라 돈으로 환전하세요!</p>
+    <div>
+      <label>환전할 화폐 : </label>
+      <select class="exchange">
+        <option value="usd">미국</option>
+        <option value="jpy">일본</option>
+        <option value="cny">중국</option>
+      </select>
+      <label>&nbsp;환전할 금액 : </label>
+      <input class="price" type="text" /> 원
+    </div>
+    <div class="view-container">
+      <button class="btn">환전</button>
+      <span class="view"></span>
+    </div>
+    <script>
+      const btn = document.querySelector('.btn');
+      const exchange = document.querySelector('.exchange');
+      const price = document.querySelector('.price');
+      const view = document.querySelector('.view');
+
+      let usdEx = 1330;
+      let jpyEx = 895.05;
+      let cnyEx = 184.62;
+
+      btn.addEventListener('click', (e) => {
+        if (exchange.value == 'usd') {
+          let excUsd = price.value / usdEx;
+          let viewUsd = (Math.round(excUsd * 100) / 100).toFixed(2);
+          view.innerText = `환전 금액은 ${new Intl.NumberFormat('ko-KR').format(
+            viewUsd
+          )} 달러입니다.`;
+        } else if (exchange.value == 'jpy') {
+          let excJpy = price.value / jpyEx;
+          let viewJpy = (Math.round(excJpy * 10000) / 100).toFixed(2);
+          view.innerText = `환전 금액은 ${new Intl.NumberFormat('ko-KR').format(
+            viewJpy
+          )} 엔화입니다.`;
+        } else {
+          let excCny = price.value / cnyEx;
+          let viewCny = (Math.round(excCny * 100) / 100).toFixed(2);
+          view.innerText = `환전 금액은 ${new Intl.NumberFormat('ko-KR').format(
+            viewCny
+          )} 위안입니다.`;
+        }
+      });
+    </script>
+  </body>
+</html>
