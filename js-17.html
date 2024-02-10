@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>넌센스 문제</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100dvh;
+      }
+      h1 {
+        margin: 0;
+      }
+      .btn {
+        width: 100px;
+        height: 70px;
+        border: none;
+        color: white;
+        font-size: 30px;
+        font-weight: bold;
+        background-color: #10b334;
+      }
+      .container {
+        width: 600px;
+        height: 300px;
+        background-color: #dece1f;
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .view {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .view.end {
+        display: none;
+      }
+      .ans {
+        display: none;
+      }
+      .ans.show {
+        display: block;
+        margin: 25px;
+        padding: 10px;
+        width: 100px;
+        text-align: center;
+      }
+      .start.end {
+        display: none;
+      }
+      .finish {
+        font-weight: bold;
+        margin: 10px;
+      }
+      .finish.end {
+        display: none;
+      }
+      .check {
+        display: none;
+      }
+      .check.show {
+        display: block;
+        width: 80px;
+        height: 40px;
+        margin: 20px;
+      }
+      .reStart {
+        display: none;
+      }
+      .reStart.show {
+        display: block;
+        width: 120px;
+        height: 70px;
+        font-size: 25px;
+        border: none;
+        color: white;
+        font-weight: bold;
+        background-color: #1098b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>넌센스 퀴즈!</h1>
+    <div class="container">
+      <span class="view"></span>
+      <button class="btn start">시작</button>
+      <button class="check">정답확인</button>
+      <span class="finish"></span>
+    </div>
+    <button class="btn reStart">다시시작</button>
+    <script>
+      const view = document.querySelector('.view');
+      const check = document.querySelector('.check');
+      const start = document.querySelector('.start');
+      const finish = document.querySelector('.finish ');
+      const reStart = document.querySelector('.reStart');
+
+      start.addEventListener('click', (e) => {
+        e.target.classList.add('end');
+        check.classList.add('show');
+        let random = Math.floor(Math.random() * 10);
+        view.classList.remove('end');
+        view.innerHTML = data[random].quiz;
+        check.addEventListener('click', (e) => {
+          e.target.classList.remove('show');
+          finish.classList.remove('end');
+          finish.innerText = `정답 : ${data[random].ans}`;
+          reStart.classList.add('show');
+        });
+      });
+
+      reStart.addEventListener('click', (e) => {
+        e.target.classList.remove('show');
+        check.classList.remove('show');
+        start.classList.remove('end');
+        view.classList.add('end');
+        finish.classList.add('end');
+      });
+
+      let data = [
+        {
+          quiz: '아몬드가 죽으면 어떻게 될까?',
+          ans: '다이아몬드',
+        },
+        {
+          quiz: '병아리가 먹는 약은 무엇일까?',
+          ans: '삐약',
+        },
+        {
+          quiz: '구명 보트에는 몇명이 탈 수 있을까? ',
+          ans: '9명',
+        },
+        {
+          quiz: '도둑고양이에게 가장 어울리는 금은?',
+          ans: '야금',
+        },
+        {
+          quiz: '별중에 가장 슬픈 별은?',
+          ans: '이별',
+        },
+        {
+          quiz: '중학생과 고등학생이 타는 차는 무엇일까?',
+          ans: '중고차',
+        },
+        {
+          quiz: '차도가 없는 나라는?',
+          ans: '인도',
+        },
+        {
+          quiz: '최고의 명사수가 다니는 중학교는?',
+          ans: '백발백중',
+        },
+        {
+          quiz: '개 중 가장 아름다운 개는?',
+          ans: '무지개',
+        },
+        {
+          quiz: '발이 두 개 달린 소는?',
+          ans: '이발소',
+        },
+      ];
+    </script>
+  </body>
+</html>
