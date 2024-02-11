@@ -25,7 +25,7 @@
         background-color: #10b334;
       }
       .container {
-        width: 600px;
+        width: 700px;
         height: 300px;
         background-color: #dece1f;
         margin: 20px;
@@ -35,7 +35,8 @@
         align-items: center;
       }
       .view {
-        font-size: 20px;
+        font-size: 30px;
+        margin: 10px;
         font-weight: bold;
       }
       .view.end {
@@ -54,11 +55,33 @@
       .start.end {
         display: none;
       }
+      .inputSet {
+        display: none;
+      }
+      .inputSet.show {
+        display: inline-block;
+      }
+      .userAns {
+        display: inline-block;
+        margin: 10px;
+        width: 40px;
+        height: 50px;
+        font-size: 20px;
+        text-align: center;
+      }
       .finish {
+        font-size: 20px;
         font-weight: bold;
         margin: 10px;
       }
       .finish.end {
+        display: none;
+      }
+      .checkAns {
+        font-weight: bold;
+        margin: 10px;
+      }
+      .checkAns.end {
         display: none;
       }
       .check {
@@ -69,6 +92,12 @@
         width: 80px;
         height: 40px;
         margin: 20px;
+      }
+      .valCheck {
+        display: block;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
       .reStart {
         display: none;
@@ -90,37 +119,76 @@
     <div class="container">
       <span class="view"></span>
       <button class="btn start">시작</button>
-      <button class="check">정답확인</button>
+      <div class="inputSet"></div>
+      <span class="checkAns"></span>
       <span class="finish"></span>
     </div>
+    <button class="check">정답확인</button>
     <button class="btn reStart">다시시작</button>
     <script>
       const view = document.querySelector('.view');
       const check = document.querySelector('.check');
       const start = document.querySelector('.start');
-      const finish = document.querySelector('.finish ');
+      const finish = document.querySelector('.finish');
+      const checkAns = document.querySelector('.checkAns');
       const reStart = document.querySelector('.reStart');
+      const inputSet = document.querySelector('.inputSet');
+      let ansSize = [];
+      let test = [];
+      let lastAns = '';
 
       start.addEventListener('click', (e) => {
         e.target.classList.add('end');
         check.classList.add('show');
-        let random = Math.floor(Math.random() * 10);
+        inputSet.classList.add('show');
         view.classList.remove('end');
+        let random = Math.floor(Math.random() * 10);
         view.innerHTML = data[random].quiz;
-        check.addEventListener('click', (e) => {
-          e.target.classList.remove('show');
-          finish.classList.remove('end');
-          finish.innerText = `정답 : ${data[random].ans}`;
-          reStart.classList.add('show');
-        });
+        ansSize = data[random].ans.split('');
+        lastAns = data[random].ans;
+
+        if (ansSize.length > 0) {
+          if (inputSet.childElementCount != 0) {
+            while (inputSet.firstChild) {
+              inputSet.removeChild(inputSet.firstChild);
+            }
+          }
+          for (let i = 1; i <= ansSize.length; i++) {
+            const creInput = document.createElement('input');
+            creInput.classList.add('userAns');
+            creInput.id = i;
+            inputSet.appendChild(creInput);
+          }
+        }
+      });
+
+      check.addEventListener('click', (e) => {
+        e.target.classList.remove('show');
+        finish.classList.remove('end');
+        reStart.classList.add('show');
+        for (let i = 1; i <= ansSize.length; i++) {
+          let str = document.getElementById(i).value;
+          test.push(str);
+        }
+        if (test.join('') == lastAns) {
+          checkAns.style.color = `blue`;
+          checkAns.innerHTML = '정답입니다!!';
+        } else {
+          checkAns.style.color = `red`;
+          checkAns.innerHTML = '틀렸습니다!!';
+        }
+        console.log(test);
+        finish.innerText = `정답 : ${lastAns}`;
       });
 
       reStart.addEventListener('click', (e) => {
         e.target.classList.remove('show');
         check.classList.remove('show');
+        inputSet.classList.remove('show');
         start.classList.remove('end');
         view.classList.add('end');
         finish.classList.add('end');
+        checkAns.classList.add('end');
       });
 
       let data = [
@@ -134,7 +202,7 @@
         },
         {
           quiz: '구명 보트에는 몇명이 탈 수 있을까? ',
-          ans: '9명',
+          ans: '구명',
         },
         {
           quiz: '도둑고양이에게 가장 어울리는 금은?',
