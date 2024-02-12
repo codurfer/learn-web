@@ -133,11 +133,14 @@
       const checkAns = document.querySelector('.checkAns');
       const reStart = document.querySelector('.reStart');
       const inputSet = document.querySelector('.inputSet');
+      const userAns = document.querySelectorAll('.userAns');
       let ansSize = [];
       let test = [];
       let lastAns = '';
 
       start.addEventListener('click', (e) => {
+        ansSize.length = 0;
+        test.length = 0;
         e.target.classList.add('end');
         check.classList.add('show');
         inputSet.classList.add('show');
@@ -156,6 +159,7 @@
           for (let i = 1; i <= ansSize.length; i++) {
             const creInput = document.createElement('input');
             creInput.classList.add('userAns');
+            creInput.maxLength = 1;
             creInput.id = i;
             inputSet.appendChild(creInput);
           }
@@ -164,6 +168,7 @@
 
       check.addEventListener('click', (e) => {
         e.target.classList.remove('show');
+        checkAns.classList.remove('end');
         finish.classList.remove('end');
         reStart.classList.add('show');
         for (let i = 1; i <= ansSize.length; i++) {
@@ -177,7 +182,6 @@
           checkAns.style.color = `red`;
           checkAns.innerHTML = '틀렸습니다!!';
         }
-        console.log(test);
         finish.innerText = `정답 : ${lastAns}`;
       });
 
