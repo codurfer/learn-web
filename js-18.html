@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100dvh;
+      }
+      img {
+        width: 100%;
+        border: solid 4px;
+        border-radius: 15px;
+        border-color: rgb(99, 211, 74);
+      }
+      header {
+        width: 100%;
+        display: block;
+        float: left;
+        letter-spacing: 3px;
+      }
+      hr {
+        background: rgb(99, 211, 74);
+        height: 1px;
+        border: 0;
+      }
+      .menu-item {
+        width: 450px;
+        margin: 20px;
+      }
+      .menu-info {
+        margin: 5px;
+      }
+      .menu-text {
+        color: rgb(121, 121, 121);
+      }
+      .btn {
+        padding: 15px;
+        border: solid 3px;
+        border-radius: 10px;
+        font-weight: bold;
+        background-color: transparent;
+      }
+      .btn:hover {
+        background-color: rgb(224, 224, 224);
+      }
+      .menuName {
+        font-weight: bold;
+      }
+      .price {
+        float: right;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Menu</h1>
+    <div class="btn-container">
+      <button type="button" class="btn" data-id="all">모든 메뉴</button>
+      <button type="button" class="btn" data-id="breakfast">아침 메뉴</button>
+      <button type="button" class="btn" data-id="lunch">점심 메뉴</button>
+      <button type="button" class="btn" data-id="dinner">저녁 메뉴</button>
+    </div>
+    <div class="content-container"></div>
+    <script>
+      const content = document.querySelector('.content-container');
+      const btns = document.querySelectorAll('.btn');
+
+      window.addEventListener('DOMContentLoaded', () => {
+        displayMenuItems(menu);
+      });
+      btns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const category = e.currentTarget.dataset.id;
+          const menuCategory = menu.filter((menuItem) => {
+            console.log(menuItem.category);
+            if (menuItem.category === category) {
+              return menuItem;
+            }
+          });
+          if (category === 'all') {
+            displayMenuItems(menu);
+          } else {
+            displayMenuItems(menuCategory);
+          }
+        });
+      });
+
+      function displayMenuItems(menuItems) {
+        let displayMenu = menu.map((item) => {
+          return `
+          <article class="menu-item">
+            <img
+              src=${item.img}
+              class="photo"
+              alt="${item.title}"
+            />
+            <div class="menu-info">
+              <header>
+                <span class="menuName">${item.title}</span>
+                <span class="price">￦${item.price}</span>
+                <hr />
+              </header>
+              <p class="menu-text">
+                ${item.desc}
+              </p>
+            </div>
+          </article>`;
+        });
+        displayMenu = displayMenu.join('');
+        content.innerHTML = displayMenu;
+      }
+
+      let menu = [
+        {
+          id: 1,
+          title: '과일 요거트',
+          category: 'breakfast',
+          price: 15000,
+          img: 'https://images.pexels.com/photos/1099681/pexels-photo-1099681.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+          desc: `식욕이 없는 아침에 산뜻하게 과일과 견과류로 하루를 시작해보세요!`,
+        },
+        {
+          id: 2,
+          title: '수제버거와 감자튀김',
+          category: 'lunch',
+          price: 35000,
+          img: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+          desc: `든든한 점심을 맛있는 수제버거로 속을 채워보세요`,
+        },
+        {
+          id: 3,
+          title: '바비큐',
+          category: 'dinner',
+          price: 60000,
+          img: 'https://images.pexels.com/photos/3186654/pexels-photo-3186654.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+          desc: `근사한 저녁을 위한 메뉴입니다.`,
+        },
+      ];
+    </script>
+  </body>
+</html>
