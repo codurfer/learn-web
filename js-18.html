@@ -77,7 +77,7 @@
         btn.addEventListener('click', (e) => {
           const category = e.currentTarget.dataset.id;
           const menuCategory = menu.filter((menuItem) => {
-            console.log(menuItem.category);
+            console.log(menuItem.category === category);
             if (menuItem.category === category) {
               return menuItem;
             }
@@ -91,7 +91,7 @@
       });
 
       function displayMenuItems(menuItems) {
-        let displayMenu = menu.map((item) => {
+        let displayMenu = menuItems.map((item) => {
           return `
           <article class="menu-item">
             <img
