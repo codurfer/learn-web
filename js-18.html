@@ -6,6 +6,7 @@
     <title>Menu</title>
     <style>
       body {
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -14,6 +15,7 @@
       }
       img {
         width: 100%;
+        height: 300px;
         border: solid 4px;
         border-radius: 15px;
         border-color: rgb(99, 211, 74);
@@ -28,6 +30,11 @@
         background: rgb(99, 211, 74);
         height: 1px;
         border: 0;
+      }
+      .content-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
       }
       .menu-item {
         width: 450px;
@@ -77,7 +84,6 @@
         btn.addEventListener('click', (e) => {
           const category = e.currentTarget.dataset.id;
           const menuCategory = menu.filter((menuItem) => {
-            console.log(menuItem.category === category);
             if (menuItem.category === category) {
               return menuItem;
             }
@@ -120,7 +126,7 @@
           id: 1,
           title: '과일 요거트',
           category: 'breakfast',
-          price: 15000,
+          price: 24000,
           img: 'https://images.pexels.com/photos/1099681/pexels-photo-1099681.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
           desc: `식욕이 없는 아침에 산뜻하게 과일과 견과류로 하루를 시작해보세요!`,
         },
@@ -128,7 +134,7 @@
           id: 2,
           title: '수제버거와 감자튀김',
           category: 'lunch',
-          price: 35000,
+          price: 38000,
           img: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
           desc: `든든한 점심을 맛있는 수제버거로 속을 채워보세요`,
         },
@@ -139,6 +145,46 @@
           price: 60000,
           img: 'https://images.pexels.com/photos/3186654/pexels-photo-3186654.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
           desc: `근사한 저녁을 위한 메뉴입니다.`,
+        },
+        {
+          id: 4,
+          title: '소고기 파인애플 볶음밥',
+          category: 'lunch',
+          price: 45000,
+          img: 'https://cdn.pixabay.com/photo/2019/08/15/09/00/pilaf-4407500_1280.jpg',
+          desc: `상큼한 파인애플과 육즙가득한 소고기가 볶음밥을 만났다!`,
+        },
+        {
+          id: 5,
+          title: '연어 스테이크',
+          category: 'dinner',
+          price: 52000,
+          img: 'https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_1280.jpg',
+          desc: `가벼운 저녁과 근사함을 원하다면 이 메뉴를 드셔보세요`,
+        },
+        {
+          id: 6,
+          title: '비빔밥',
+          category: 'lunch',
+          price: 38000,
+          img: 'https://cdn.pixabay.com/photo/2016/10/13/19/15/bibimbap-1738580_1280.jpg',
+          desc: `신선한 야채들과 매콤한 고추장을 함께 비벼먹는 한국 전통 메뉴입니다.`,
+        },
+        {
+          id: 7,
+          title: '야채김밥',
+          category: 'breakfast',
+          price: 12000,
+          img: 'https://cdn.pixabay.com/photo/2022/03/18/00/16/dish-7075619_1280.jpg',
+          desc: `한국인들의 간편하고 든든한 아침 메뉴입니다.`,
+        },
+        {
+          id: 8,
+          title: '라볶이',
+          category: 'lunch',
+          price: 30000,
+          img: 'https://cdn.pixabay.com/photo/2022/12/29/01/01/image-7683986_1280.jpg',
+          desc: `떡볶이와 라면의 만남! 한국인이 사랑하는 분식입니다.`,
         },
       ];
     </script>
