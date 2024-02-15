@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>구구단</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .content {
+        width: 650px;
+        height: 400px;
+        background-color: rgb(230, 235, 100);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .btn {
+        margin: 10px;
+        width: 80px;
+        height: 80px;
+        border: none;
+        border-radius: 20%;
+        font-weight: bold;
+        font-size: 20px;
+      }
+      .start {
+        color: white;
+        background-color: rgb(98, 98, 98);
+      }
+      .start:hover {
+        background-color: rgb(121, 121, 121);
+      }
+      .start.end {
+        display: none;
+      }
+      .submit {
+        display: none;
+      }
+      .submit.show {
+        display: block;
+        height: 35px;
+        color: white;
+        border-radius: 10%;
+        background-color: rgb(160, 80, 80);
+      }
+      .view {
+        font-size: 30px;
+        font-weight: bold;
+      }
+      .user {
+        display: none;
+      }
+      .user.show {
+        display: flex;
+        text-align: center;
+        font-size: 20px;
+        margin: 10px;
+        width: 50px;
+        height: 40px;
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>구구단</h1>
+    <div class="content">
+      <section class="content">
+        <span class="view"></span>
+        <input type="number" class="user" />
+        <input type="button" class="btn start" value="시작" />
+        <input type="button" class="btn submit" value="제출" />
+      </section>
+    </div>
+    <script>
+      const start = document.querySelector('.start');
+      const submit = document.querySelector('.submit');
+      const view = document.querySelector('.view');
+      const user = document.querySelector('.user');
+      let ranFir = 0;
+      let ranSec = 0;
+      let check = 0;
+
+      start.addEventListener('click', (e) => {
+        e.target.classList.add('end');
+        user.classList.add('show');
+        submit.classList.add('show');
+        ranFir = Math.floor(Math.random() * 9 + 1);
+        ranSec = Math.floor(Math.random() * 9 + 1);
+        view.innerHTML = `${ranFir} x ${ranSec} = ??`;
+        check = ranFir * ranSec;
+      });
+
+      submit.addEventListener('click', (e) => {
+        console.log(user.value);
+        if (Number(check) === Number(user.value)) {
+          view.innerHTML = `정답! ${ranFir} x ${ranSec} = ${user.value}`;
+        } else {
+          view.innerHTML = `땡!!! 답은 ${ranFir} x ${ranSec} = ${check}`;
+        }
+        user.value = '';
+        user.classList.remove('show');
+        submit.classList.remove('show');
+        start.classList.remove('end');
+        start.value = '재시작';
+      });
+    </script>
+  </body>
+</html>
