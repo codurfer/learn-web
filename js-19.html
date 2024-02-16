@@ -50,8 +50,10 @@
         background-color: rgb(160, 80, 80);
       }
       .view {
+        margin: 10px;
         font-size: 30px;
         font-weight: bold;
+        text-align: center;
       }
       .user {
         display: none;
@@ -78,7 +80,8 @@
         <span class="view"></span>
         <input type="number" class="user" />
         <input type="button" class="btn start" value="시작" />
-        <input type="button" class="btn submit" value="제출" />
+        <input type="button" class="btn submit" value="정답" />
+        <p class="result"></p>
       </section>
     </div>
     <script>
@@ -86,33 +89,71 @@
       const submit = document.querySelector('.submit');
       const view = document.querySelector('.view');
       const user = document.querySelector('.user');
-      let ranFir = 0;
-      let ranSec = 0;
-      let check = 0;
+      const result = document.querySelector('.result');
+      var quizs = [];
+      var count = 0;
 
       start.addEventListener('click', (e) => {
         e.target.classList.add('end');
         user.classList.add('show');
         submit.classList.add('show');
-        ranFir = Math.floor(Math.random() * 9 + 1);
-        ranSec = Math.floor(Math.random() * 9 + 1);
-        view.innerHTML = `${ranFir} x ${ranSec} = ??`;
-        check = ranFir * ranSec;
+        quizs = [];
+        count = 0;
+        push();
+        quizView();
       });
 
       submit.addEventListener('click', (e) => {
-        console.log(user.value);
-        if (Number(check) === Number(user.value)) {
-          view.innerHTML = `정답! ${ranFir} x ${ranSec} = ${user.value}`;
+        if (Number(user.value) === quizs[count].ans) {
+          count++;
+          if (count === 3) {
+            result.innerHTML = `정답입니다.`;
+            setTimeout("user.value = ''", 1000);
+            setTimeout("result.innerHTML = ''", 1000);
+            setTimeout('view.innerHTML = `3문제 전부 다 풀었습니다`', 1000);
+            setTimeout(end, 1000);
+          } else {
+            result.innerHTML = `정답입니다.`;
+            setTimeout("user.value = ''", 1000);
+            setTimeout(quizView, 1000);
+            setTimeout("result.innerHTML = ''", 1000);
+          }
         } else {
-          view.innerHTML = `땡!!! 답은 ${ranFir} x ${ranSec} = ${check}`;
+          result.innerHTML = `틀렸습니다.`;
+          user.value = '';
+          setTimeout("result.innerHTML = ''", 1000);
         }
-        user.value = '';
+      });
+
+      function random() {
+        let ranFir = Math.floor(Math.random() * 8) + 2;
+        let ranSec = Math.floor(Math.random() * 9) + 1;
+        return {
+          que: `${ranFir} X ${ranSec} = ??`,
+          ans: ranFir * ranSec,
+        };
+      }
+
+      function push() {
+        var newQuiz;
+        while (quizs.length != 3) {
+          do {
+            newQuiz = random();
+          } while (quizs.some((quiz) => quiz.que === newQuiz.que));
+          quizs.push(newQuiz);
+        }
+      }
+
+      function quizView() {
+        view.innerText = `<${count + 1}번 문제>\n${quizs[count].que}`;
+      }
+
+      function end() {
         user.classList.remove('show');
         submit.classList.remove('show');
-        start.classList.remove('end');
         start.value = '재시작';
-      });
+        start.classList.remove('end');
+      }
     </script>
   </body>
 </html>
