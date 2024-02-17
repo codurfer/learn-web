@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>유저 입력창</title>
+    <style>
+      body {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100dvh;
+      }
+      .view {
+        margin: 20px;
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        justify-content: center;
+        width: 600px;
+        height: 300px;
+        border-color: black;
+        border: solid 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>입력하는대로</h1>
+    <span class="view">아무거나 입력해보세요!</span>
+    <textarea class="user"></textarea>
+    <script>
+      const view = document.querySelector('.view');
+      const user = document.querySelector('.user');
+
+      user.addEventListener('keyup', (e) => {
+        if (user.value === '') {
+          view.innerText = '아무거나 입력해보세요!';
+        } else {
+          view.innerText = user.value;
+        }
+      });
+    </script>
+  </body>
+</html>
