@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>랜덤 박스</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .btn {
+        margin: 20px;
+        width: 80px;
+        height: 80px;
+        border: none;
+        font-weight: bold;
+        font-size: 15px;
+        background-color: rgb(224, 93, 11);
+        border-radius: 15%;
+        color: white;
+      }
+      .btn:hover {
+        background-color: rgb(78, 207, 91);
+      }
+      .reStart {
+        display: none;
+      }
+      .reStart.end {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>랜덤 박스</h1>
+    <div class="random">
+      <button class="btn" value="1"></button>
+      <button class="btn" value="2"></button>
+      <button class="btn" value="3"></button>
+      <button class="btn" value="4"></button>
+      <button class="btn" value="5"></button>
+    </div>
+    <button class="reStart"></button>
+    <script>
+      const btns = document.querySelectorAll('.btn');
+      const result = document.querySelector('.result');
+      const reStart = document.querySelector('.reStart');
+      let number = randomNumber();
+      console.log(number);
+
+      btns.forEach((btn) => {
+        btn.innerHTML = `?`;
+        btn.addEventListener('click', (e) => {
+          const target = e.target;
+          const val = e.target.value;
+          if (Number(val) === number) {
+            btns.forEach((btn) => {
+              btn.disabled = true;
+              btn.innerHTML = `꽝`;
+              target.disabled = true;
+              target.innerHTML = `당첨`;
+              target.style.backgroundColor = `rgb(62, 158, 231)`;
+              reStart.classList.add('end');
+              reStart.innerHTML = `다시 하기`;
+            });
+          } else {
+            btns.forEach((btn) => {
+              reStart.classList.add('end');
+              reStart.innerHTML = `다시 하기`;
+              btn.disabled = true;
+              btn.innerHTML = `꽝`;
+              target.style.backgroundColor = `rgb(62, 158, 231)`;
+              if (Number(btn.value) === number) {
+                btn.innerHTML = `당첨`;
+              }
+            });
+          }
+        });
+      });
+
+      reStart.addEventListener('click', (e) => {
+        location.reload();
+      });
+
+      function randomNumber() {
+        let num = Math.floor(Math.random() * 5) + 1;
+        return num;
+      }
+    </script>
+  </body>
+</html>
