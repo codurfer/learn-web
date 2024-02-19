@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>30초 스톱</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .btn-container {
+        display: inline-block;
+        justify-content: center;
+        align-items: center;
+      }
+      .end .secret {
+        display: none;
+      }
+      .end .open {
+        display: none;
+      }
+      .btn {
+        margin: 10px;
+        width: 80px;
+        height: 70px;
+        background-color: rgb(96, 115, 78);
+        border: none;
+        border-radius: 15%;
+        font-weight: bold;
+        color: white;
+      }
+      .btn:hover {
+        background-color: rgb(48, 97, 3);
+      }
+      .clock {
+        display: none;
+      }
+      .clock.show {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px;
+        width: 250px;
+        height: 100px;
+        background-color: coral;
+      }
+      .time {
+        font-size: 40px;
+      }
+      .mil {
+        height: 15px;
+        font-size: 20px;
+      }
+      .stop {
+        display: none;
+      }
+      .stop.show {
+        display: block;
+      }
+      .reStart {
+        display: none;
+      }
+      .reStart.show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>30초 스톱</h1>
+    <section class="clock">
+      <span class="time min">00:</span>
+      <span class="time sec">00</span>
+      <span class="time mil">/00</span>
+    </section>
+    <div class="btn-container">
+      <button class="btn open">공개</button>
+      <button class="btn secret">비공개</button>
+      <button class="btn stop">스톱</button>
+    </div>
+    <span class="result"></span>
+    <button class="btn reStart">재시작</button>
+    <script>
+      const btns = document.querySelectorAll('.btn');
+      const stopBtn = document.querySelector('.stop');
+      const clock = document.querySelector('.clock');
+      const contai = document.querySelector('.btn-container');
+      const result = document.querySelector('.result');
+      const reStart = document.querySelector('.reStart');
+      const min = document.querySelector('.min');
+      const sec = document.querySelector('.sec');
+      const mil = document.querySelector('.mil');
+      let interval;
+      let minute = 0;
+      let second = 0;
+      let milli = 0;
+
+      btns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const className = e.target.classList;
+          contai.classList.add('end');
+          if (className.contains('open')) {
+            clock.classList.add('show');
+            stopBtn.classList.add('show');
+            interval = setInterval(timeStart, 10);
+          } else if (className.contains('secret')) {
+            result.innerHTML = '시간이 작동중입니다. 30초에 멈춰주세요!';
+            interval = setInterval(timeStart, 10);
+            stopBtn.classList.add('show');
+          } else if (className.contains('stop')) {
+            clock.classList.add('show');
+            className.remove('show');
+            clearInterval(interval);
+            checkTime();
+          }
+        });
+      });
+
+      reStart.addEventListener('click', (e) => {
+        location.reload();
+      });
+
+      function timeStart() {
+        milli++;
+        if (milli === 100) {
+          milli = 0;
+          second++;
+          if (second === 60) {
+            second = 0;
+            minute++;
+          }
+        }
+
+        min.innerHTML = format(minute);
+        sec.innerHTML = `:${format(second)}`;
+        mil.innerHTML = `/${format(milli)}`;
+      }
+
+      function format(num) {
+        if (num <= 9) {
+          return `0${num}`;
+        } else return num;
+      }
+
+      function checkTime() {
+        if (second === 30) {
+          result.innerHTML = '<b>정확히 30초에 멈췄습니다.</b>';
+          reStart.classList.add('show');
+        } else if (minute < 1) {
+          result.innerHTML = '<b>아직 30초가 안되었습니다.</b>';
+          reStart.classList.add('show');
+        } else {
+          result.innerHTML = '<b>이미 30초가 넘었습니다.</b>';
+          reStart.classList.add('show');
+        }
+      }
+    </script>
+  </body>
+</html>
