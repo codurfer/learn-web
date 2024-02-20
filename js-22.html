@@ -148,7 +148,7 @@
         if (second === 30) {
           result.innerHTML = '<b>정확히 30초에 멈췄습니다.</b>';
           reStart.classList.add('show');
-        } else if (minute < 1) {
+        } else if (second < 30) {
           result.innerHTML = '<b>아직 30초가 안되었습니다.</b>';
           reStart.classList.add('show');
         } else {
