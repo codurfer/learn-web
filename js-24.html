@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .number-content {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        margin: 5px;
+        line-height: 45px;
+      }
+      .num {
+        margin: 10px;
+        width: 50px;
+        height: 50px;
+        border: none;
+        font-weight: bold;
+        color: white;
+        background-color: rgb(100, 145, 213);
+      }
+      .user {
+        text-align: center;
+        width: 60px;
+      }
+      .check {
+        margin: 10px;
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>야구볼게임</h1>
+    <div class="number-content">
+      <div class="num">?</div>
+      <div class="num">?</div>
+      <div class="num">?</div>
+    </div>
+    <input class="user" type="number" oninput="maxlen(this, 3)" />
+    <button class="check">확인</button>
+    <script>
+      const view = document.querySelector('.number-content');
+      const nums = document.querySelectorAll('.num');
+      const check = document.querySelector('.check');
+      const user = document.querySelector('.user');
+      let setNum = [];
+      let userNum = [];
+      let count = 0;
+      let strike = 0;
+      let ball = 0;
+
+      for (let i = 0; i < 3; i++) {
+        let randomNum = Math.floor(Math.random() * 9) + 1;
+        setNum.push(randomNum);
+      }
+      console.log(setNum);
+
+      check.addEventListener('click', (e) => {
+        userNum = user.value.split('');
+        console.log(`userNum: ${userNum}`);
+        checkNum();
+        if (strike === 3) {
+          view.innerHTML = `정답입니다!`;
+        }
+      });
+
+      function maxlen(num, maxlen) {
+        if (num.value.length > maxlen) {
+          num.value = num.value.substr(0, maxlen);
+        }
+      }
+
+      function checkNum() {
+        count++;
+        strike = 0;
+        ball = 0;
+        if (count === 10) {
+          view.innerHTML = '10번의 기회를 다 사용했습니다.';
+        } else {
+          for (let i = 0; i < userNum.length; i++) {
+            if (Number(userNum[i]) === setNum[i]) {
+              strike++;
+            } else if (
+              userNum[i] != setNum[i] &&
+              setNum.includes(Number(userNum[i]))
+            ) {
+              ball++;
+            }
+          }
+          view.innerHTML = `스트라이크: ${strike} / 볼: ${ball}`;
+        }
+      }
+    </script>
+  </body>
+</html>
