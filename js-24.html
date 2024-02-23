@@ -28,7 +28,7 @@
         border: none;
         font-weight: bold;
         color: white;
-        background-color: rgb(100, 145, 213);
+        background-color: rgb(233, 67, 67);
       }
       .num.ans {
         margin: 10px;
@@ -37,7 +37,7 @@
         border: none;
         font-weight: bold;
         color: white;
-        background-color: rgb(220, 110, 86);
+        background-color: rgb(86, 160, 220);
       }
       .user {
         display: block;
@@ -49,6 +49,13 @@
       }
       .check {
         margin: 10px;
+        width: 70px;
+        font-weight: bold;
+        color: white;
+        height: 30px;
+        border: none;
+        border-radius: 5%;
+        background-color: rgb(119, 154, 22);
       }
 
       input::-webkit-outer-spin-button,
@@ -68,42 +75,54 @@
     <input class="user" type="number" oninput="maxlen(this, 3)" />
     <button class="check">확인</button>
     <span class="result"></span>
-
+    <ol class="list"></ol>
     <script>
       const view = document.querySelector('.number-content');
       const nums = document.querySelectorAll('.num');
       const check = document.querySelector('.check');
       const user = document.querySelector('.user');
       const result = document.querySelector('.result');
+      const list = document.querySelector('.list');
       let setNum = [];
       let userNum = [];
+      let challeNum = [];
       let count = 0;
       let strike = 0;
       let ball = 0;
 
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; setNum.length < 3; i++) {
         let randomNum = Math.floor(Math.random() * 9) + 1;
         setNum.push(randomNum);
+        checkRandom();
       }
-      console.log(setNum);
+
+      function checkRandom() {
+        setNum = setNum.filter((item, index) => {
+          return setNum.indexOf(item) === index;
+        });
+      }
 
       check.addEventListener('click', (e) => {
-        userNum = user.value.split('');
-        console.log(`userNum: ${userNum}`);
-        checkNum();
-        if (strike === 3) {
-          nums.forEach((num) => {
-            num.classList.add('ans');
-            console.log(num.classList);
-            if (num.classList.contains('fir')) {
-              num.innerText = `${setNum[0]}`;
-            } else if (num.classList.contains('sec')) {
-              num.innerText = `${setNum[1]}`;
-            } else if (num.classList.contains('thr')) {
-              num.innerText = `${setNum[2]}`;
-            }
-          });
-          result.innerText = `정답입니다!`;
+        if (user.value.length === 3) {
+          userNum = user.value.split('');
+          checkNum();
+          if (strike === 3) {
+            nums.forEach((num) => {
+              num.classList.add('ans');
+              if (num.classList.contains('fir')) {
+                num.innerText = `${setNum[0]}`;
+              } else if (num.classList.contains('sec')) {
+                num.innerText = `${setNum[1]}`;
+              } else if (num.classList.contains('thr')) {
+                num.innerText = `${setNum[2]}`;
+              }
+            });
+            result.innerText = `정답입니다!`;
+            reGame();
+          }
+        } else {
+          alert('숫자 3자리를 입력하세요!');
+          user.value = '';
         }
       });
 
@@ -119,11 +138,7 @@
         ball = 0;
         if (count === 11) {
           result.innerHTML = '10번의 기회를 다 사용했습니다.';
-          check.innerText = `다시하기`;
-          user.classList.add('end');
-          check.addEventListener('click', (e) => {
-            location.reload();
-          });
+          reGame();
         } else {
           for (let i = 0; i < userNum.length; i++) {
             if (Number(userNum[i]) === setNum[i]) {
@@ -135,8 +150,22 @@
               ball++;
             }
           }
-          result.innerText = `${count}번째 결과\n스트라이크: ${strike} / 볼: ${ball}`;
+          challeNum.push(
+            ` ${userNum.join('')} / 스트라이크: ${strike} / 볼: ${ball}`
+          );
+          const creLi = document.createElement('li');
+          creLi.textContent = challeNum[0];
+          list.appendChild(creLi);
+          challeNum = [];
         }
+      }
+
+      function reGame() {
+        check.innerText = `다시하기`;
+        user.classList.add('end');
+        check.addEventListener('click', (e) => {
+          location.reload();
+        });
       }
     </script>
   </body>
