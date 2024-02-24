@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OX 퀴즈</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .view {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-weight: bold;
+        font-size: 25px;
+        width: 800px;
+        height: 300px;
+        background-color: rgb(0, 255, 149);
+      }
+      .true-false {
+        display: none;
+      }
+      .true-false.show {
+        display: block;
+      }
+      .btn {
+        margin: 15px;
+        width: 80px;
+        height: 30px;
+        border: none;
+        border-radius: 5%;
+      }
+      .start {
+        display: block;
+        color: white;
+        font-weight: bold;
+        background-color: rgb(218, 72, 14);
+      }
+      .start.end {
+        display: none;
+      }
+      .start:hover {
+        background-color: rgb(200, 120, 89);
+      }
+      .sel {
+        color: white;
+        margin: 20px;
+        width: 80px;
+        height: 80px;
+        border: none;
+        border-radius: 50%;
+        font-size: 40px;
+      }
+      .true {
+        background-color: rgb(26, 118, 239);
+      }
+      .false {
+        background-color: rgb(239, 26, 76);
+      }
+      .true:hover {
+        background-color: rgb(78, 140, 220);
+      }
+      .false:hover {
+        background-color: rgb(233, 104, 134);
+      }
+      .reStart {
+        display: none;
+      }
+      .reStart.show {
+        display: block;
+        color: white;
+        font-weight: bold;
+        background-color: rgb(14, 106, 218);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>OX 퀴즈</h1>
+    <span class="view">퀴즈를 푸실려면 시작버튼을 누르세요!</span>
+    <button class="btn start">시작</button>
+    <button class="btn reStart">다시하기</button>
+    <div class="true-false">
+      <button class="sel true" value="0">O</button>
+      <button class="sel false" value="1">X</button>
+    </div>
+    <span class="result"></span>
+    <script>
+      const view = document.querySelector('.view');
+      const start = document.querySelector('.start');
+      const reStart = document.querySelector('.reStart');
+      const trueFalse = document.querySelector('.true-false');
+      const sel = document.querySelectorAll('.sel');
+      let setQuiz = [];
+      let count = 0;
+
+      start.addEventListener('click', (e) => {
+        start.classList.add('end');
+        trueFalse.classList.add('show');
+        quizStart();
+      });
+
+      reStart.addEventListener('click', (e) => {
+        location.reload();
+      });
+
+      for (let i = 0; setQuiz.length < 3; i++) {
+        let setNum = Math.floor(Math.random() * 9) + 1;
+        setQuiz.push(setNum);
+        checkRandom();
+      }
+
+      function checkRandom() {
+        setQuiz = setQuiz.filter((item, index) => {
+          return setQuiz.indexOf(item) === index;
+        });
+      }
+
+      function quizStart() {
+        view.innerText = `${quiz[setQuiz[0]].que}`;
+        sel.forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            if (e.target.value === quiz[setQuiz[0]].ans) {
+              view.innerText = '정답입니다!';
+              count++;
+              setTimeout('nextQuiz()', 1000);
+            } else {
+              view.innerText = '틀렸습니다!';
+              setTimeout('nextQuiz()', 1000);
+            }
+          });
+        });
+      }
+
+      function nextQuiz() {
+        setQuiz.shift();
+        if (setQuiz.length === 0) {
+          view.innerText = `모든 문제를 다 풀었습니다.\n총 3문제중 ${count}개 맞추었어요!`;
+          trueFalse.classList.remove('show');
+          reStart.classList.add('show');
+        } else {
+          view.innerText = `${quiz[setQuiz[0]].que}`;
+        }
+      }
+
+      let quiz = [
+        {
+          que: '구글 본사는 샌프라시스코에 있다.',
+          ans: '0',
+        },
+        {
+          que: '한국에서 태국까지 비행시간은 3시간이다.',
+          ans: '1',
+        },
+        {
+          que: '자바와 자바스크립트는 다른 언어이다.',
+          ans: '1',
+        },
+        {
+          que: '코틀린과 고언어는 구글에서 만들었다',
+          ans: '1',
+        },
+        {
+          que: '리액트는 페이스북에서 만들었다.',
+          ans: '0',
+        },
+        {
+          que: '일본어는 한국어와 어순이 같다.',
+          ans: '0',
+        },
+        {
+          que: '애플 본사는 샌프라시스코에 있다.',
+          ans: '1',
+        },
+        {
+          que: '리액트 네이티브로 안드로이드와 아이폰 앱을 만들 수 있다.',
+          ans: '0',
+        },
+        {
+          que: '많은 프로그래밍 언어의 조건문은 if일 가능성이 크다.',
+          ans: '0',
+        },
+        {
+          que: '한국의 수도는 서울이다.',
+          ans: '0',
+        },
+      ];
+    </script>
+  </body>
+</html>
