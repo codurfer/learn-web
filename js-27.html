@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Max & Min</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .content {
+        display: none;
+      }
+      .content.show {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        line-height: 75px;
+      }
+      .input-container {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        line-height: 75px;
+      }
+      .start {
+        display: flex;
+        margin: 15px;
+      }
+      .start.end {
+        display: none;
+      }
+      .view {
+        width: 210px;
+        height: 80px;
+        font-size: 40px;
+        color: white;
+        border: none;
+        background-color: rgb(74, 75, 75);
+      }
+      .max {
+        display: none;
+      }
+      .min {
+        display: none;
+      }
+      .max.show {
+        display: block;
+        margin: 15px;
+        text-align: center;
+        font-size: 25px;
+        width: 80px;
+        height: 30px;
+      }
+      .min.show {
+        display: block;
+        margin: 15px;
+        text-align: center;
+        font-size: 25px;
+        width: 80px;
+        height: 30px;
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      .ansSub {
+        display: none;
+      }
+      .ansSub.show {
+        display: flex;
+        margin: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Max & Min</h1>
+    <div class="content">
+      <div class="view"></div>
+    </div>
+    <div class="input-container">
+      <input
+        class="max"
+        placeholder="최대값"
+        type="number"
+        oninput="maxlen(this, 4)"
+      />
+      <input
+        class="min"
+        placeholder="최소값"
+        type="number"
+        oninput="maxlen(this, 4)"
+      />
+    </div>
+    <span class="result"></span>
+    <button class="start">시작</button>
+    <button class="ansSub">확인</button>
+    <script>
+      const start = document.querySelector('.start');
+      const max = document.querySelector('.max');
+      const min = document.querySelector('.min');
+      const view = document.querySelector('.view');
+      const ansSub = document.querySelector('.ansSub');
+      const result = document.querySelector('.result');
+      let setNum = [];
+      let maxNum = 0;
+      let minNum = 0;
+
+      function maxlen(num, maxlen) {
+        if (num.value.length > maxlen) {
+          num.value = num.value.substr(0, maxlen);
+        }
+      }
+
+      start.addEventListener('click', (e) => {
+        max.value = '';
+        min.value = '';
+        e.target.classList.add('end');
+        view.parentElement.classList.add('show');
+        max.classList.add('show');
+        min.classList.add('show');
+        ansSub.classList.add('show');
+        randomNum();
+        view.textContent = `${setNum.join('')}`;
+        result.textContent = '최대값과 최소값을 입력하세요!';
+      });
+
+      ansSub.addEventListener('click', (e) => {
+        let valueMax = max.value;
+        let valueMin = min.value;
+        checkAns(valueMax, valueMin);
+      });
+
+      function randomNum() {
+        setNum = [];
+        let sortNum = [];
+        while (setNum.length < 4) {
+          let number = Math.floor(Math.random() * 9) + 1;
+          setNum.push(number);
+
+          setNum = setNum.filter((value, index) => {
+            return setNum.indexOf(value) === index;
+          });
+        }
+        sortNum = Array.from(setNum);
+        sortNum.sort();
+        minNum = sortNum.join('');
+        maxNum = sortNum.reverse().join('');
+      }
+
+      function checkAns(num1, num2) {
+        if (num1 != '' && num1 != '') {
+          if (num1 === maxNum && num2 === minNum) {
+            result.textContent = '정답입니다!';
+            ansSub.classList.remove('show');
+            start.classList.remove('end');
+            start.textContent = '재시작';
+          } else if (num1 === maxNum && num2 != minNum) {
+            result.textContent = '최대값은 정답! 최소값은 틀렸습니다.';
+          } else if (num1 != maxNum && num2 === minNum) {
+            result.textContent = '최소값은 정답! 최대값은 틀렸습니다.';
+          } else {
+            result.textContent = '두 개 모두 틀렸습니다.';
+          }
+        } else {
+          result.textContent = '값을 입력되지 않았습니다!!';
+          setTimeout(
+            "result.textContent = '최대값과 최소값을 입력하세요!'",
+            1500
+          );
+        }
+      }
+    </script>
+  </body>
+</html>
