@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .game {
+        display: none;
+      }
+      .game.active {
+        display: block;
+        margin-bottom: 20px;
+      }
+      input {
+        width: 50px;
+        height: 50px;
+        font-size: 40px;
+        text-align: center;
+      }
+      .start {
+        display: flex;
+      }
+      .start.end {
+        display: none;
+      }
+      .sub {
+        display: none;
+      }
+      .sub.active {
+        display: flex;
+      }
+      .result {
+        margin: 20px;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>단어맞추기</h1>
+    <button class="start">시작</button>
+    <div class="game">
+      <input class="input" oninput="maxlen(this, 1)" />
+      <input class="input" oninput="maxlen(this, 1)" />
+      <input class="input" oninput="maxlen(this, 1)" />
+      <input class="input" oninput="maxlen(this, 1)" />
+      <input class="input" oninput="maxlen(this, 1)" />
+      <br />
+    </div>
+    <button class="sub">제출</button>
+    <span class="result"></span>
+
+    <script>
+      const start = document.querySelector('.start');
+      const sub = document.querySelector('.sub');
+      const game = document.querySelector('.game');
+      const input = document.querySelectorAll('.input');
+      const result = document.querySelector('.result');
+      let ckNum = 0;
+      let trNum = 0;
+
+      function maxlen(num, maxlen) {
+        if (num.value.length > maxlen) {
+          num.value = num.value.substr(0, maxlen);
+        }
+      }
+
+      start.addEventListener('click', (e) => {
+        reset();
+        active();
+        ckNum = Number(setNumRandom());
+        console.log(ckNum);
+      });
+
+      sub.addEventListener('click', (e) => {
+        checkWord();
+        if (trNum === 5) {
+          result.textContent = '정답입니다!';
+          setTimeout('remove()', 3000);
+        }
+      });
+
+      function checkWord() {
+        for (let i = 0; i < 5; i++) {
+          if (input[i].value === ans[ckNum][i]) {
+            trNum++;
+            input[i].style.background = 'rgb(64, 119, 219)';
+          } else if (ans[ckNum].includes(input[i].value)) {
+            input[i].style.background = 'rgb(230, 126, 65)';
+          }
+        }
+      }
+
+      function reset() {
+        for (let i = 0; i < 5; i++) {
+          input[i].value = '';
+          input[i].style.background = 'White';
+        }
+      }
+
+      function setNumRandom() {
+        let num = Math.floor(Math.random() * 10);
+        return num;
+      }
+
+      function active() {
+        start.classList.add('end');
+        game.classList.add('active');
+        sub.classList.add('active');
+      }
+
+      function remove() {
+        result.textContent = '';
+        trNum = 0;
+        start.classList.remove('end');
+        game.classList.remove('active');
+        sub.classList.remove('active');
+      }
+
+      let ans = [
+        ['a', 'p', 'p', 'l', 'e'],
+        ['b', 'l', 'o', 'o', 'd'],
+        ['c', 'h', 'i', 'l', 'd'],
+        ['a', 'd', 'u', 'l', 't'],
+        ['c', 'l', 'i', 'm', 'b'],
+        ['f', 'r', 'o', 'g', 's'],
+        ['h', 'a', 'p', 'p', 'y'],
+        ['p', 'i', 'z', 'z', 'a'],
+        ['w', 'i', 'n', 'g', 's'],
+        ['h', 'o', 't', 'e', 'l'],
+      ];
+    </script>
+  </body>
+</html>
