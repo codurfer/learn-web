@@ -50,7 +50,6 @@
       <input class="input" oninput="maxlen(this, 1)" />
       <input class="input" oninput="maxlen(this, 1)" />
       <input class="input" oninput="maxlen(this, 1)" />
-      <br />
     </div>
     <button class="sub">제출</button>
     <span class="result"></span>
@@ -62,7 +61,6 @@
       const input = document.querySelectorAll('.input');
       const result = document.querySelector('.result');
       let ckNum = 0;
-      let trNum = 0;
 
       function maxlen(num, maxlen) {
         if (num.value.length > maxlen) {
@@ -73,32 +71,37 @@
       start.addEventListener('click', (e) => {
         reset();
         active();
-        ckNum = Number(setNumRandom());
+        // ckNum = Number(setNumRandom());
         console.log(ckNum);
       });
 
       sub.addEventListener('click', (e) => {
         checkWord();
-        if (trNum === 5) {
-          result.textContent = '정답입니다!';
-          setTimeout('remove()', 3000);
-        }
       });
 
       function checkWord() {
         for (let i = 0; i < 5; i++) {
           if (input[i].value === ans[ckNum][i]) {
-            trNum++;
             input[i].style.background = 'rgb(64, 119, 219)';
+            input[i].classList.add('ok');
           } else if (ans[ckNum].includes(input[i].value)) {
             input[i].style.background = 'rgb(230, 126, 65)';
           }
+        }
+        checkOk();
+      }
+
+      function checkOk() {
+        if (document.getElementsByClassName('ok').length === 5) {
+          result.textContent = '정답입니다!';
+          setTimeout('remove()', 3000);
         }
       }
 
       function reset() {
         for (let i = 0; i < 5; i++) {
           input[i].value = '';
+          input[i].classList.remove('ok');
           input[i].style.background = 'White';
         }
       }
@@ -116,7 +119,6 @@
 
       function remove() {
         result.textContent = '';
-        trNum = 0;
         start.classList.remove('end');
         game.classList.remove('active');
         sub.classList.remove('active');
