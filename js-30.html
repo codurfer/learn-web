@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 80vh;
+      }
+      h1 {
+        font-size: 50px;
+      }
+      .welcome {
+        font-size: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1>Hello!</h1>
+      <span class="welcome"></span>
+    </div>
+    <script>
+      const welcomeWord = `I'm developer!`;
+      const welcome = document.querySelector('.welcome');
+      let i = 0;
+      let j = 0;
+      let textWord = [];
+      let show;
+      textWord = welcomeWord.split('');
+
+      function startWel() {
+        welcome.innerText = '';
+        show = setInterval(typing, 200);
+      }
+
+      function typing() {
+        if (i < welcomeWord.length) {
+          welcome.innerHTML += textWord[i];
+          i++;
+        } else if (i === welcomeWord.length) {
+          j = i;
+          i = welcomeWord.length + 1;
+        } else if (-1 < j) {
+          welcome.innerHTML = welcome.innerHTML.slice(0, j);
+          j--;
+        } else {
+          clearInterval(show);
+        }
+      }
+
+      startWel();
+    </script>
+  </body>
+</html>
