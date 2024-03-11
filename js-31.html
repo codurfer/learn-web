@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>change button</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh;
+      }
+      .btnCon {
+        display: flex;
+      }
+      .btn {
+        margin: 10px;
+        padding: 10px;
+        border: none;
+        font-size: 20px;
+        font-weight: bold;
+        width: 80px;
+        height: 70px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>누를때 마다 크기와 모양이 변경되는 버튼</h1>
+    <div class="btnCon">
+      <button class="btn change">누르면 변해요</button>
+      <button class="btn reset">초기화</button>
+    </div>
+    <script>
+      const change = document.querySelector('.change');
+      const reset = document.querySelector('.reset');
+      let wid = 0;
+      let hei = 0;
+      let bor = 0;
+      let bgc1 = 0;
+      let bgc2 = 0;
+      let bgc3 = 0;
+
+      change.addEventListener('click', (e) => {
+        bgc1 = Math.floor(Math.random() * 255);
+        bgc2 = Math.floor(Math.random() * 255);
+        bgc3 = Math.floor(Math.random() * 255);
+        wid = sizeCheck();
+        hei = sizeCheck();
+        bor = Math.floor(Math.random() * 100);
+        change.style.backgroundColor = `rgb(${bgc1}, ${bgc2}, ${bgc3})`;
+        change.style.color = `rgb(${bgc3}, ${bgc1}, ${bgc2})`;
+        change.style.width = `${wid}px`;
+        change.style.height = `${hei}px`;
+        if (bor < 50) {
+          change.style.borderRadius = `${bor}px`;
+        } else {
+          bor = Math.floor(Math.random() * 50) + 1;
+          change.style.borderRadius = `${bor}%`;
+        }
+      });
+
+      reset.addEventListener('click', (e) => {
+        location.reload();
+      });
+
+      function sizeCheck() {
+        let num = Math.floor(Math.random() * 400);
+        if (num < 80) {
+          return (num = 80);
+        } else {
+          return num;
+        }
+      }
+    </script>
+  </body>
+</html>
