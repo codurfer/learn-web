@@ -103,7 +103,7 @@
         hintTime = setTimeout('hintShow.classList.add("active")', 5000);
         result.textContent = '5초 후에 힌트를 확인할 수 있어요!';
         infoHint = setTimeout("result.textContent = ''", 5000);
-        ranNum = Math.floor(Math.random() * 9);
+        ranNum = Math.floor(Math.random() * 10);
         words = movieQuiz[ranNum].word;
         for (let i = 0; i < words.length; i++) {
           const creWord = document.createElement('div');
