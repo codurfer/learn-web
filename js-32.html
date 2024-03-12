@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>영화 제목 맞추기</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .view {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        line-height: 50px;
+      }
+      .word {
+        margin: 10px;
+        width: 50px;
+        height: 50px;
+        font-weight: bold;
+        background-color: bisque;
+      }
+      .btn {
+        margin: 20px 10px;
+        width: 110px;
+        height: 60px;
+        border: none;
+        border-radius: 40px;
+        font-size: 20px;
+      }
+      .start {
+        display: block;
+      }
+      .start.active {
+        display: none;
+      }
+      .check {
+        display: none;
+      }
+      .check.active {
+        display: block;
+      }
+      .inpu {
+        display: none;
+      }
+      .inpu.active {
+        display: flex;
+        margin-top: 10px;
+        width: 300px;
+        text-align: center;
+        font-size: 30px;
+      }
+      .hintShow {
+        display: none;
+      }
+      .hintShow.active {
+        display: flex;
+        margin: 20px;
+        border: none;
+        padding: 10px;
+        background-color: rgb(198, 226, 74);
+        font-size: 20px;
+      }
+      .result {
+        margin: 10px;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>영화 초성 퀴즈</h1>
+    <div class="view"></div>
+    <button class="hintShow"></button>
+    <input class="inpu" />
+    <div class="btnCon">
+      <button class="btn start">시작</button>
+      <button class="btn check">확인</button>
+    </div>
+    <span class="result"></span>
+    <script>
+      const start = document.querySelector('.start');
+      const reStart = document.querySelector('.reStart');
+      const check = document.querySelector('.check');
+      const view = document.querySelector('.view');
+      const inpu = document.querySelector('.inpu');
+      const result = document.querySelector('.result');
+      const hintShow = document.querySelector('.hintShow');
+      let wordLen;
+      let ranNum;
+
+      start.addEventListener('click', (e) => {
+        view.innerHTML = '';
+        start.classList.toggle('active');
+        check.classList.toggle('active');
+        inpu.classList.toggle('active');
+        setTimeout('hintFun()', 5000);
+        result.textContent = '5초 후에 힌트를 확인할 수 있어요!';
+        setTimeout("result.textContent = ''", 5000);
+        ranNum = Math.floor(Math.random() * 9);
+        words = movieQuiz[ranNum].word;
+        for (let i = 0; i < words.length; i++) {
+          const creWord = document.createElement('div');
+          creWord.classList.add('word');
+          creWord.textContent = `${movieQuiz[ranNum].word[i]}`;
+          view.appendChild(creWord);
+        }
+      });
+
+      hintShow.addEventListener('click', (e) => {
+        hintShow.textContent = `${movieQuiz[ranNum].hint}`;
+      });
+
+      check.addEventListener('click', (e) => {
+        if (inpu.value === movieQuiz[ranNum].answer.join('')) {
+          result.textContent = `정답입니다!`;
+          inpu.classList.toggle('active');
+          check.classList.toggle('active');
+          start.classList.toggle('active');
+          hintShow.classList.toggle('active');
+          start.textContent = '다시';
+          view.innerHTML = '';
+          inpu.value = '';
+          for (let i = 0; i < words.length; i++) {
+            const creWord = document.createElement('div');
+            creWord.classList.add('word');
+            creWord.textContent = `${movieQuiz[ranNum].answer[i]}`;
+            view.appendChild(creWord);
+          }
+        } else {
+          result.textContent = `다시 생각해보세요!`;
+          setTimeout('result.textContent = ""', 2000);
+        }
+      });
+
+      function hintFun() {
+        hintShow.classList.toggle('active');
+        hintShow.textContent = '힌트확인!';
+      }
+
+      let movieQuiz = [
+        {
+          word: ['ㄴ', 'ㅎ', 'ㄹ', 'ㅈ', 'ㅇ'],
+          hint: '어른이 된통 당하는 영화',
+          answer: ['나', '홀', '로', '집', '에'],
+        },
+        {
+          word: ['ㅂ', 'ㅌ', 'ㄹ'],
+          hint: '나 여기 아트박스 사장인데...',
+          answer: ['베', '테', '랑'],
+        },
+        {
+          word: ['ㄱ', 'ㅅ', 'ㅊ'],
+          hint: '소고기가 들어있는 짜파구리!!',
+          answer: ['기', '생', '충'],
+        },
+        {
+          word: ['ㅅ', 'ㄱ', 'ㅇ', 'ㅊ'],
+          hint: '이것은 꼬리 칸의 반란!',
+          answer: ['설', '국', '열', '차'],
+        },
+        {
+          word: ['ㅊ', 'ㅂ', 'ㅂ', 'ㅇ', 'ㅅ', 'ㅁ'],
+          hint: '감옥에 애가 나타났다?!',
+          answer: ['칠', '번', '방', '의', '선', '물'],
+        },
+        {
+          word: ['ㅁ', 'ㄴ', 'ㄴ', 'ㄱ', 'ㄹ', 'ㅇ'],
+          hint: 'Maria~ Ave maria~!!',
+          answer: ['미', '녀', '는', '괴', '로', '워'],
+        },
+        {
+          word: ['ㅂ', 'ㅈ', 'ㅇ', 'ㅈ', 'ㅇ'],
+          hint: '마이 프레셔~스!!!',
+          answer: ['반', '지', '의', '제', '왕'],
+        },
+        {
+          word: ['ㅅ', 'ㄱ', 'ㅊ', 'ㅎ', 'ㄹ', 'ㅇ', 'ㅎ', 'ㅂ', 'ㅂ', 'ㅁ'],
+          hint: '엄마 아빠가 돼지로 변해버렸어?!',
+          answer: ['센', '과', '치', '히', '로', '의', '행', '방', '불', '명'],
+        },
+        {
+          word: ['ㄹ', 'ㅇ', 'ㅇ', 'ㅇ', 'ㅂ', 'ㄱ', 'ㅎ', 'ㄱ'],
+          hint: '밀리터리 덕후라면 꼭 봤을 영화! 설리번 오형제 모티브!',
+          answer: ['라', '이', '언', '일', '병', '구', '하', '기'],
+        },
+        {
+          word: ['ㅇ', 'ㅈ', 'ㅆ'],
+          hint: '난 오늘만 산다.',
+          answer: ['아', '저', '씨'],
+        },
+      ];
+    </script>
+  </body>
+</html>
