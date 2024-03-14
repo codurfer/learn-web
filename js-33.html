@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>숫자 돌리기</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .view {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+        width: 300px;
+        height: 200px;
+        background-color: aquamarine;
+      }
+      .numberView {
+        font-size: 60px;
+      }
+      .btn {
+        width: 100px;
+        height: 50px;
+        border: none;
+        border-radius: 40px;
+        font-size: 20px;
+        color: white;
+      }
+      .start {
+        background-color: rgb(37, 169, 206);
+      }
+      .start:hover {
+        background-color: rgb(88, 186, 213);
+      }
+      .start:disabled {
+        background-color: rgb(209, 230, 237);
+      }
+      .stop {
+        background-color: rgb(206, 102, 37);
+      }
+      .stop:hover {
+        background-color: rgb(205, 130, 84);
+      }
+      .stop:disabled {
+        background-color: rgb(210, 184, 167);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>숫자 돌리기</h1>
+    <span class="info">멈추기를 누르거나 가만히 놔두면 번호가 선택됩니다.</span>
+    <div class="view">
+      <span class="numberView">000</span>
+    </div>
+    <div class="btnContainer">
+      <button class="btn start">돌리기</button>
+      <button class="btn stop">멈추기</button>
+    </div>
+    <script>
+      const numberView = document.querySelector('.numberView');
+      const startBtn = document.querySelector('.start');
+      const stopBtn = document.querySelector('.stop');
+      let count = 0;
+      let countNum = 0;
+      let randomNum = 0;
+      let timer;
+      stopBtn.disabled = true;
+
+      function numUp() {
+        if (count === 1) {
+          if (countNum === randomNum) {
+            clearTimeout(timer);
+            numberView.innerHTML = `${formatNum(randomNum)}`;
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+          } else {
+            countNum++;
+            numberView.innerHTML = `${formatNum(countNum)}`;
+          }
+        } else {
+          if (countNum === 999) {
+            countNum = 0;
+            count++;
+          } else {
+            countNum++;
+            numberView.innerHTML = `${formatNum(countNum)}`;
+          }
+        }
+      }
+
+      function formatNum(num) {
+        if (num < 10) {
+          return `00${num}`;
+        } else if (num < 100) {
+          return `0${num}`;
+        } else return num;
+      }
+
+      startBtn.addEventListener('click', (e) => {
+        e.target.disabled = true;
+        stopBtn.disabled = false;
+        count = 0;
+        randomNum = Math.floor(Math.random() * 1000) + 1;
+        timer = setInterval('numUp()', 1);
+      });
+
+      stopBtn.addEventListener('click', (e) => {
+        clearTimeout(timer);
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
+      });
+    </script>
+  </body>
+</html>
