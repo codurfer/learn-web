@@ -50,6 +50,12 @@
       .stop:disabled {
         background-color: rgb(210, 184, 167);
       }
+      .reset {
+        background-color: rgb(62, 57, 53);
+      }
+      .reset:hover {
+        background-color: rgb(26, 24, 23);
+      }
     </style>
   </head>
   <body>
@@ -61,38 +67,40 @@
     <div class="btnContainer">
       <button class="btn start">돌리기</button>
       <button class="btn stop">멈추기</button>
+      <button class="btn reset">초기화</button>
     </div>
     <script>
       const numberView = document.querySelector('.numberView');
       const startBtn = document.querySelector('.start');
       const stopBtn = document.querySelector('.stop');
+      const resetBtn = document.querySelector('.reset');
       let count = 0;
       let countNum = 0;
       let randomNum = 0;
-      let timer;
+      let numUp;
       stopBtn.disabled = true;
 
-      function numUp() {
-        if (count === 1) {
-          if (countNum === randomNum) {
-            clearTimeout(timer);
-            numberView.innerHTML = `${formatNum(randomNum)}`;
-            startBtn.disabled = false;
-            stopBtn.disabled = true;
-          } else {
-            countNum++;
-            numberView.innerHTML = `${formatNum(countNum)}`;
-          }
-        } else {
-          if (countNum === 999) {
-            countNum = 0;
-            count++;
-          } else {
-            countNum++;
-            numberView.innerHTML = `${formatNum(countNum)}`;
-          }
-        }
-      }
+      // function numUp() {
+      //   if (count === 1) {
+      //     if (countNum === randomNum) {
+      //       clearTimeout(timer);
+      //       numberView.innerHTML = `${formatNum(randomNum)}`;
+      //       startBtn.disabled = false;
+      //       stopBtn.disabled = true;
+      //     } else {
+      //       countNum++;
+      //       numberView.innerHTML = `${formatNum(countNum)}`;
+      //     }
+      //   } else {
+      //     if (countNum === 999) {
+      //       countNum = 0;
+      //       count++;
+      //     } else {
+      //       countNum++;
+      //       numberView.innerHTML = `${formatNum(countNum)}`;
+      //     }
+      //   }
+      // }
 
       function formatNum(num) {
         if (num < 10) {
@@ -107,13 +115,36 @@
         stopBtn.disabled = false;
         count = 0;
         randomNum = Math.floor(Math.random() * 1000) + 1;
-        timer = setInterval('numUp()', 1);
+        numUp = setInterval(() => {
+          if (randomNum <= countNum) {
+            countNum = randomNum;
+            clearInterval(numUp);
+            e.target.disabled = false;
+            stopBtn.disabled = true;
+          } else {
+            countNum += 8;
+          }
+          numberView.innerHTML = `${formatNum(countNum)}`;
+        }, 10);
       });
 
       stopBtn.addEventListener('click', (e) => {
-        clearTimeout(timer);
+        clearTimeout(numUp);
         startBtn.disabled = false;
         stopBtn.disabled = true;
+      });
+
+      resetBtn.addEventListener('click', (e) => {
+        console.log(countNum);
+        if (countNum != 0) {
+          clearTimeout(numUp);
+          countNum = 0;
+          numberView.innerHTML = `${formatNum(countNum)}`;
+          startBtn.disabled = false;
+          stopBtn.disabled = true;
+        } else {
+          alert('초기화가 되어있는 상태입니다');
+        }
       });
     </script>
   </body>
